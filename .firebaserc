@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "fsc-shop-d9efb",
+    "firebase use portfolio": "fsc-portfolio"
+  },
+  "targets": {},
+  "etags": {}
+}
