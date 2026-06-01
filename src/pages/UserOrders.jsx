@@ -28,14 +28,21 @@ export default function UserOrders() {
 };
 
   const loadOrders = async () => {
-    if (!auth.currentUser) return;
+  console.log("Current User:", auth.currentUser);
 
-    const data = await getUserOrders(
-      auth.currentUser.uid
-    );
+  if (!auth.currentUser) {
+    console.log("User Not Logged In");
+    return;
+  }
 
-    setOrders(data);
-  };
+  const data = await getUserOrders(
+    auth.currentUser.uid
+  );
+
+  console.log("Orders Found:", data);
+
+  setOrders(data);
+};
 
   const getStatusColor = (status) => {
     switch (status) {
