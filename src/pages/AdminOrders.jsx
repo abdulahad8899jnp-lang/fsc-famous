@@ -166,28 +166,41 @@ return (
               {/* Actions */}
               <div className="flex flex-col sm:flex-row gap-4 mt-6">
                 <select
-                  value={order.status}
-                  onChange={(e) =>
-                    handleStatusChange(
-                      order.id,
-                      e.target.value
-                    )
-                  }
-                  className="w-full sm:w-auto bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-white"
-                >
-                  <option value="pending">Pending</option>
-                  <option value="processing">Processing</option>
-                  <option value="shipped">Shipped</option>
-                  <option value="delivered">Delivered</option>
-                  <option value="cancelled">Cancelled</option>
-                </select>
+  value={order.status}
+  onChange={(e) => {
+    const newStatus = e.target.value;
+
+    const confirmChange = window.confirm(
+      "Do you want to change order status?"
+    );
+
+    if (!confirmChange) return;
+
+    handleStatusChange(order.id, newStatus);
+  }}
+  className="w-full sm:w-auto bg-zinc-800 border border-zinc-700 rounded-xl px-4 py-3 text-white"
+>
+  <option value="pending">Pending</option>
+  <option value="processing">Processing</option>
+  <option value="shipped">Shipped</option>
+  <option value="delivered">Delivered</option>
+  <option value="cancelled">Cancelled</option>
+</select>
 
                 <button
-                  onClick={() => handleDelete(order.id)}
-                  className="w-full sm:w-auto bg-red-600 hover:bg-red-700 transition px-5 py-3 rounded-xl font-semibold"
-                >
-                  Delete Order
-                </button>
+  onClick={() => {
+    const confirmDelete = window.confirm(
+      "Do you want to delete this order?"
+    );
+
+    if (!confirmDelete) return;
+
+    handleDelete(order.id);
+  }}
+  className="w-full sm:w-auto bg-red-600 hover:bg-red-700 transition px-5 py-3 rounded-xl font-semibold"
+>
+  Delete Order
+</button>
               </div>
             </div>
           ))}

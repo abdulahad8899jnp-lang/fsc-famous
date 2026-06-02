@@ -11,7 +11,7 @@ export default function OrderSuccess() {
 
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
-
+const [shown, setShown] = useState(false);
   useEffect(() => {
     const fetchOrder = async () => {
       try {
@@ -35,6 +35,20 @@ export default function OrderSuccess() {
       fetchOrder();
     }
   }, [orderId]);
+ 
+
+
+useEffect(() => {
+  const alertKey = `order-alert-${orderId}`;
+  const alreadyShown = localStorage.getItem(alertKey);
+
+  if (!loading && order && !alreadyShown) {
+    alert("🎉 Order Placed Successfully!");
+
+    localStorage.setItem(alertKey, "true");
+  }
+}, [loading, order, orderId]);
+
 
   if (loading) {
     return (
