@@ -46,8 +46,8 @@ export default function Navbar() {
       >
         Contact
       </NavLink>
+   
       
-    
     
     </div>
   );

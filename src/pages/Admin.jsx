@@ -924,7 +924,12 @@ const handleLogout = async () => {
   </h1>
 
   <div className="flex gap-3 flex-wrap">
-
+      <button
+  onClick={() => navigate("/admin/users")}
+  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl"
+>
+  All Users
+</button>
     <button
       onClick={() => navigate("/admin/orders")}
       className="

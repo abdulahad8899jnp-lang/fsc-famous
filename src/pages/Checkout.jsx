@@ -1,6 +1,6 @@
-import { auth } from "../firebase/firebase";
+
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../firebase/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { motion } from "framer-motion";
@@ -9,7 +9,7 @@ export default function Checkout() {
   
   const { state } = useLocation();
   const navigate = useNavigate();
-
+const user = JSON.parse(localStorage.getItem("user")) || {};
   const product = state?.product;
   const variant = state?.variant;
   const size = state?.size;
@@ -17,9 +17,9 @@ export default function Checkout() {
   const price = state?.price || variant?.price || product?.price || 0;
 
   const [qty, setQty] = useState(1);
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+ const [name, setName] = useState(user?.name || "");
+const [phone, setPhone] = useState(user?.phone || "");
+const [address, setAddress] = useState(user?.address || "");
   const [loading, setLoading] = useState(false);
 
   if (!product) {
@@ -31,46 +31,95 @@ export default function Checkout() {
   }
 
   const totalPrice = price * qty;
+  useEffect(() => {
+  const user = JSON.parse(localStorage.getItem("user"));
 
-  const placeOrder = async () => {
-    if (!name || !phone || !address) return;
+  if (!user) {
+    alert("Please login first");
+    navigate("/user-login");
+  }
+}, [navigate]);
 
-    setLoading(true);
+const placeOrder = async () => {
+  const user = JSON.parse(
+    localStorage.getItem("user")
+  );
 
-    try {
-      const orderData = {
-  customer: { name, phone, address },
+  if (!user?.uid) {
+  alert("Session expired, please login again");
+  navigate("/user-login");
+  return;
+}
 
-  userId: auth.currentUser?.uid || null,
+  if (!user) {
+    alert("Please login first");
+    navigate("/user-login");
+    return;
+  }
 
-  items: [
-    {
-      productId: product.id,
-      name: product.name,
-      price,
-      qty,
-      image: variant?.image,
-      articleNo: variant?.articleNo,
-      color: variant?.color,
-      size,
-    },
-  ],
+  if (!name || !phone || !address) {
+    alert("All fields are required");
+    return;
+  }
 
-  totalPrice,
-  status: "pending",
-  createdAt: serverTimestamp(),
+  const phoneRegex = /^[0-9]{10}$/;
+
+  if (!phoneRegex.test(phone)) {
+    alert("Phone number must be exactly 10 digits");
+    return;
+  }
+
+  const confirmOrder = window.confirm(
+    "Do you want to place this order?"
+  );
+
+  if (!confirmOrder) return;
+
+  setLoading(true);
+
+  try {
+    const orderData = {
+      customer: {
+        name,
+        phone,
+        address,
+      },
+
+      userId: user.uid,
+
+      items: [
+        {
+          productId: product.id,
+          name: product.name,
+          price,
+          qty,
+          image: variant?.image,
+          articleNo: variant?.articleNo,
+          color: variant?.color,
+          size,
+        },
+      ],
+
+      totalPrice,
+      status: "pending",
+      createdAt: serverTimestamp(),
+    };
+
+    const docRef = await addDoc(
+      collection(db, "orders"),
+      orderData
+    );
+
+    navigate(
+      `/order-success/${docRef.id}`
+    );
+  } catch (err) {
+    console.log(err);
+    alert("Order failed");
+  }
+
+  setLoading(false);
 };
-
-      const docRef = await addDoc(collection(db, "orders"), orderData);
-
-      navigate(`/order-success/${docRef.id}`);
-    } catch (err) {
-      console.log(err);
-      alert("Order failed");
-    }
-
-    setLoading(false);
-  };
 
  return (
   <div className="min-h-screen bg-black text-white p-3 sm:p-5 md:p-10 flex justify-center">
