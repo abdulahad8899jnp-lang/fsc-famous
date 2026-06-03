@@ -818,7 +818,7 @@ export default function ProductPopup({
       return;
     }
 
-    const phoneNumber = "916389102151";
+    const phoneNumber = "918299559581";
 
     const message = `🛍️ New Order
 
