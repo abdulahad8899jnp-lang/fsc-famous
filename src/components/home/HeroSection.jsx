@@ -35,7 +35,7 @@ export default function HeroSection() {
 
   {/* DARK LAYER */}
 
-  <div className="absolute inset-0 bg-black/75" />
+  <div className="absolute inset-0 bg-black/40 md:bg-black/60" />
 
   {/* GOLD GRADIENT */}
 
