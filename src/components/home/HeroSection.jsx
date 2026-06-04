@@ -20,57 +20,62 @@ export default function HeroSection() {
 <div className="absolute inset-0 overflow-hidden">
   {/* MAIN IMAGE */}
 
-  <img
-    src="/bgimg.png"
-    alt="hero"
-    className="
-    absolute inset-0
-    w-full h-full
-    object-cover
-    scale-105
-    opacity-50
-  "
-  />
+ <img
+  src="/bgimg.png"
+  alt="hero"
+  className="
+  absolute inset-0
+  w-full h-full
+  object-cover
+  scale-110
+  opacity-30
+  saturate-[0.7]
+"
+/>
 
   {/* DARK LAYER */}
 
-  <div className="absolute inset-0 bg-black/60" />
+  <div className="absolute inset-0 bg-black/75" />
 
   {/* GOLD GRADIENT */}
 
-  <div
-    className="
-    absolute inset-0
-    bg-gradient-to-br
-    from-yellow-500/10
-    via-transparent
-    to-orange-500/10
-  "
-  />
+ <div
+  className="
+  absolute inset-0
+  bg-gradient-to-br
+  from-[#D4AF37]/10
+  via-transparent
+  to-[#B8860B]/10
+"
+/>
 
   {/* LUXURY SPOT LIGHT */}
 
-  <div
-    className="
-    absolute
-    top-[-10%] left-[-10%]
-    w-[600px] h-[600px]
-    rounded-full
-    bg-yellow-400/20
-    blur-[180px]
-  "
-  />
+ <div
+  className="
+  absolute
+  top-[-10%]
+  left-[-10%]
+  w-[600px]
+  h-[600px]
+  rounded-full
+  bg-[#D4AF37]/15
+  blur-[220px]
+"
+/>
 
   <div
-    className="
-    absolute
-    bottom-[-10%] right-[-10%]
-    w-[500px] h-[500px]
-    rounded-full
-    bg-orange-500/20
-    blur-[160px]
-  "
-  />
+  className="
+  absolute
+  bottom-[-10%]
+  right-[-10%]
+  w-[500px]
+  h-[500px]
+  rounded-full
+  bg-[#B8860B]/10
+  blur-[220px]
+"
+/>
 
   {/* CENTER LIGHT */}
 
@@ -134,23 +139,23 @@ export default function HeroSection() {
           <div>
             {/* TOP TAG */}
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="
-              inline-flex items-center
-              px-5 py-2
-              rounded-full
-              bg-white/10
-              backdrop-blur-xl
-              border border-yellow-400/20
-              text-yellow-300
-              text-sm
-              tracking-wide
-            "
-            >
-              👑 Luxury Wedding Collection
-            </motion.div>
+           <motion.div
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  className="
+  inline-flex items-center
+  px-5 py-2
+  rounded-full
+  bg-[#111111]/80
+  backdrop-blur-xl
+  border border-[#D4AF37]/20
+  text-[#E6C86E]
+  text-sm
+  tracking-wide
+"
+>
+  👑 Luxury Wedding Collection
+</motion.div>
 
             {/* HEADING */}
 
@@ -166,20 +171,19 @@ export default function HeroSection() {
             "
             >
               Famous Sherwani
-
-              <span
-                className="
-                block mt-2
-                text-transparent
-                bg-clip-text
-                bg-gradient-to-r
-                from-yellow-300
-                via-yellow-400
-                to-orange-400
-              "
-              >
-                Collection
-              </span>
+<span
+  className="
+  block mt-2
+  text-transparent
+  bg-clip-text
+  bg-gradient-to-r
+  from-[#F5E6B3]
+  via-[#D4AF37]
+  to-[#B8860B]
+"
+>
+  Collection
+</span>
             </motion.h1>
 
             {/* DESC */}
@@ -214,47 +218,49 @@ export default function HeroSection() {
 
               <a href="/products">
                 <button
-                  className="
-                  group
-                  px-8 py-4
-                  rounded-2xl
-                  bg-yellow-400
-                  text-black
-                  font-bold
-                  flex items-center gap-3
-                  hover:scale-105
-                  hover:shadow-[0_0_40px_rgba(250,204,21,0.35)]
-                  duration-300
-                "
-                >
-                  Explore Collection
+  className="
+  group
+  px-8 py-4
+  rounded-2xl
+  bg-gradient-to-r
+  from-[#D4AF37]
+  to-[#B8860B]
+  text-black
+  font-bold
+  flex items-center gap-3
+  hover:scale-105
+  hover:shadow-[0_0_40px_rgba(212,175,55,0.45)]
+  duration-300
+"
+>
+  Explore Collection
 
-                  <ArrowRight
-                    size={18}
-                    className="
-                    group-hover:translate-x-1
-                    duration-300
-                  "
-                  />
-                </button>
+  <ArrowRight
+    size={18}
+    className="
+    group-hover:translate-x-1
+    duration-300
+  "
+  />
+</button>
               </a>
 
               {/* BTN 2 */}
 
               <a href="/contact">
                 <button
-                  className="
-                  px-8 py-4
-                  rounded-2xl
-                  border border-white/10
-                  bg-white/5
-                  backdrop-blur-xl
-                  hover:bg-white/10
-                  duration-300
-                "
-                >
-                  Contact Us
-                </button>
+  className="
+  px-8 py-4
+  rounded-2xl
+  border border-[#D4AF37]/20
+  bg-[#111111]/80
+  backdrop-blur-xl
+  hover:bg-[#171717]
+  duration-300
+"
+>
+  Contact Us
+</button>
               </a>
             </motion.div>
 
@@ -262,7 +268,7 @@ export default function HeroSection() {
 
             <div className="flex gap-10 mt-14">
               <div>
-                <h2 className="text-3xl font-black text-yellow-400">
+             <h2 className="text-3xl font-black text-[#D4AF37]">
                   500+
                 </h2>
 
@@ -272,7 +278,7 @@ export default function HeroSection() {
               </div>
 
               <div>
-                <h2 className="text-3xl font-black text-yellow-400">
+             <h2 className="text-3xl font-black text-[#D4AF37]">
                   5★
                 </h2>
 
@@ -282,7 +288,7 @@ export default function HeroSection() {
               </div>
 
               <div>
-                <h2 className="text-3xl font-black text-yellow-400">
+             <h2 className="text-3xl font-black text-[#D4AF37]">
                   10+
                 </h2>
 
@@ -307,14 +313,14 @@ export default function HeroSection() {
             <div className="relative">
               {/* GLOW */}
 
-              <div
-                className="
-                absolute inset-0
-                bg-yellow-400/20
-                blur-[120px]
-                rounded-full
-              "
-              />
+             <div
+  className="
+  absolute inset-0
+  bg-[#D4AF37]/15
+  blur-[150px]
+  rounded-full
+"
+/>
 
               {/* IMAGE CARD */}
 
@@ -322,8 +328,8 @@ export default function HeroSection() {
                 className="
                 relative
                 overflow-hidden
-                rounded-[40px]
-                border border-white/10
+               rounded-[32px]
+       border border-[#D4AF37]/15
                 bg-white/5
                 backdrop-blur-xl
                 shadow-[0_20px_80px_rgba(0,0,0,0.7)]
@@ -355,18 +361,18 @@ export default function HeroSection() {
                 -left-10 top-10
               "
               >
-                <div
-                  className="
-                  px-5 py-3
-                  rounded-2xl
-                  bg-black/50
-                  backdrop-blur-xl
-                  border border-white/10
-                  text-sm
-                "
-                >
-                  ✨ Premium Sherwani
-                </div>
+              <div
+  className="
+  px-5 py-3
+  rounded-2xl
+  bg-[#111111]/80
+  backdrop-blur-xl
+  border border-[#D4AF37]/20
+  text-sm
+"
+>
+  ✨ Premium Sherwani
+</div>
               </motion.div>
 
               {/* FLOAT TAG */}
@@ -383,17 +389,17 @@ export default function HeroSection() {
               "
               >
                 <div
-                  className="
-                  px-5 py-3
-                  rounded-2xl
-                  bg-black/50
-                  backdrop-blur-xl
-                  border border-white/10
-                  text-sm
-                "
-                >
-                  👑 Royal Collection
-                </div>
+  className="
+  px-5 py-3
+  rounded-2xl
+  bg-[#111111]/80
+  backdrop-blur-xl
+  border border-[#D4AF37]/20
+  text-sm
+"
+>
+  👑 Royal Collection
+</div>
               </motion.div>
             </div>
           </motion.div>
