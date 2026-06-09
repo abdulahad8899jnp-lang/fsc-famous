@@ -37,16 +37,18 @@ const handleSave = async () => {
   }
 
   try {
-    const userData = {
-      uid: phone,
-      phone,
-      name,
-      address,
-      age,
-      city,
-      state: stateName,
-      role: "user",
-    };
+  const userData = {
+  ...savedUser,
+
+  uid: phone,
+  phone,
+  name,
+  address,
+  age,
+  city,
+  state: stateName,
+  role: "user",
+};
 
     await setDoc(
       doc(db, "users", phone),
@@ -77,62 +79,189 @@ Invalid Access </div>
 );
 }
 
-return ( <div className="min-h-screen flex items-center justify-center bg-black px-4"> <div className="w-full max-w-md bg-zinc-950 border border-yellow-500/20 rounded-3xl p-6 mt-15">
+return ( <div className="min-h-screen bg-black flex items-center justify-center px-4 py-10 overflow-hidden">
 
-```
-    <h2 className="text-3xl font-bold text-center text-yellow-400 mb-6">
-      Complete Profile
-    </h2>
+  {/* Background Glow */}
+  <div className="fixed inset-0 -z-10">
+    <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#D4AF37]/10 blur-[180px] rounded-full" />
+    <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#B8860B]/10 blur-[180px] rounded-full" />
+  </div>
 
-    <div className="mb-4 text-zinc-400 text-center">
-      {phone}
+  <div className="w-full max-w-2xl relative">
+
+    {/* Glow Behind Card */}
+    <div className="absolute inset-0 bg-gradient-to-r from-[#D4AF37]/10 to-[#B8860B]/10 blur-[120px]" />
+
+    <div
+      className="
+      relative
+      bg-[#111]
+      border
+      border-[#D4AF37]/20
+      rounded-[40px]
+      p-8
+      md:p-10
+      shadow-[0_0_40px_rgba(212,175,55,0.08)]
+    "
+    >
+
+      {/* Header */}
+      <div className="text-center mb-8">
+
+        <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-[#F5E6B3] via-[#D4AF37] to-[#B8860B] flex items-center justify-center text-black text-4xl font-black shadow-[0_0_30px_rgba(212,175,55,0.25)]">
+          {name?.charAt(0)?.toUpperCase() || "U"}
+        </div>
+
+        <h2 className="text-4xl font-bold text-white mt-5">
+          Complete Profile
+        </h2>
+
+        <p className="text-zinc-400 mt-2">
+          Update your personal information
+        </p>
+
+        <div className="mt-4 inline-flex px-4 py-2 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/20 text-[#D4AF37] text-sm">
+          {phone}
+        </div>
+
+      </div>
+
+      {/* Form */}
+      <div className="grid md:grid-cols-2 gap-4">
+
+        <input
+          placeholder="Full Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="
+            bg-black/40
+            border
+            border-[#D4AF37]/10
+            rounded-2xl
+            p-4
+            text-white
+            outline-none
+            focus:border-[#D4AF37]
+            transition-all
+          "
+        />
+
+        <input
+          placeholder="Age (Optional)"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+          className="
+            bg-black/40
+            border
+            border-[#D4AF37]/10
+            rounded-2xl
+            p-4
+            text-white
+            outline-none
+            focus:border-[#D4AF37]
+            transition-all
+          "
+        />
+
+        <input
+          placeholder="City"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          className="
+            bg-black/40
+            border
+            border-[#D4AF37]/10
+            rounded-2xl
+            p-4
+            text-white
+            outline-none
+            focus:border-[#D4AF37]
+            transition-all
+          "
+        />
+
+        <input
+          placeholder="State"
+          value={stateName}
+          onChange={(e) => setStateName(e.target.value)}
+          className="
+            bg-black/40
+            border
+            border-[#D4AF37]/10
+            rounded-2xl
+            p-4
+            text-white
+            outline-none
+            focus:border-[#D4AF37]
+            transition-all
+          "
+        />
+
+      </div>
+
+      <textarea
+        placeholder="Full Address"
+        value={address}
+        onChange={(e) => setAddress(e.target.value)}
+        className="
+          w-full
+          mt-4
+          bg-black/40
+          border
+          border-[#D4AF37]/10
+          rounded-2xl
+          p-4
+          text-white
+          outline-none
+          focus:border-[#D4AF37]
+          transition-all
+          min-h-[120px]
+        "
+      />
+
+      {/* Buttons */}
+      <div className="grid md:grid-cols-2 gap-4 mt-8">
+
+        <button
+          onClick={() => navigate("/account")}
+          className="
+            py-4
+            rounded-2xl
+            bg-black/60
+            border
+            border-white/10
+            hover:border-[#D4AF37]/30
+            transition-all
+            text-white
+          "
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={handleSave}
+          className="
+            py-4
+            rounded-2xl
+            bg-gradient-to-r
+            from-[#D4AF37]
+            to-[#B8860B]
+            text-black
+            font-bold
+            hover:scale-[1.02]
+            transition-all
+            shadow-[0_0_25px_rgba(212,175,55,0.25)]
+          "
+        >
+          Save Profile
+        </button>
+
+      </div>
+
     </div>
 
-    <input
-      placeholder="Full Name"
-      value={name}
-      onChange={(e) => setName(e.target.value)}
-      className="w-full mb-4 p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white"
-    />
-
-    <textarea
-      placeholder="Full Address"
-      value={address}
-      onChange={(e) => setAddress(e.target.value)}
-      className="w-full mb-4 p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white"
-    />
-
-    <input
-      placeholder="Age (Optional)"
-      value={age}
-      onChange={(e) => setAge(e.target.value)}
-      className="w-full mb-4 p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white"
-    />
-
-    <input
-      placeholder="City"
-      value={city}
-      onChange={(e) => setCity(e.target.value)}
-      className="w-full mb-4 p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white"
-    />
-
-    <input
-      placeholder="State"
-      value={stateName}
-      onChange={(e) => setStateName(e.target.value)}
-      className="w-full mb-6 p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white"
-    />
-
-    <button
-      onClick={handleSave}
-      className="w-full bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-3 rounded-xl"
-    >
-      Save Profile
-    </button>
-
   </div>
+
 </div>
-
-
 );
 }

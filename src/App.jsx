@@ -60,7 +60,7 @@ import UserLogin from "./pages/UserLogin";
 import { OrderProvider } from "./store/orderStore";
 import Account from "./pages/Account";
 import ProfileSetup from "./pages/ProfileSetup";
-
+import ScrollToTop from "./components/ScrollToTop";
 
 export default function App() {
 
@@ -77,6 +77,7 @@ useEffect(() => {
   return (
     <OrderProvider>
       <BrowserRouter>
+       <ScrollToTop />
         <Navbar />
 
         <Routes>
@@ -103,29 +104,35 @@ useEffect(() => {
          <Route path="/account" element={<Account />} />
         <Route path="/order-success/:orderId" element={<OrderSuccess />} />
         </Routes>
-          <Link
+         <Link
   to={user ? "/account" : "/user-login"}
   className="
     fixed
-    bottom-6
+    bottom-20
     right-6
-    z-50
-    w-14
-    h-14
+    z-40
+    w-14 h-14
     rounded-full
-    bg-yellow-500
-    text-black
-    font-bold
-    text-xl
-    flex
-    items-center
-    justify-center
-    shadow-lg
+    flex items-center justify-center
+    bg-gradient-to-br from-[#F5E6B3] via-[#D4AF37] to-[#B8860B]
+    text-black font-bold text-lg
+    shadow-[0_0_25px_rgba(212,175,55,0.25)]
+    hover:scale-110
+    transition-all duration-300
+    overflow-hidden
   "
 >
-  {user
-    ? user.name?.charAt(0)?.toUpperCase()
-    : "U"}
+  {user?.image ? (
+    <img
+      src={user.image}
+      alt="user"
+      className="w-full h-full object-cover rounded-full"
+    />
+  ) : (
+    <span>
+      {user ? user.name?.charAt(0)?.toUpperCase() : "U"}
+    </span>
+  )}
 </Link>
         <Footer />
       </BrowserRouter>

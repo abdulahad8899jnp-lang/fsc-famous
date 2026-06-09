@@ -404,9 +404,8 @@
 
 
 import { motion } from "framer-motion";
-import { Star, ArrowUpRight } from "lucide-react";
+import { Star, ArrowUpRight, Crown } from "lucide-react";
 import { Link } from "react-router-dom";
-
 import { useEffect, useState } from "react";
 import { db } from "../../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
@@ -434,21 +433,28 @@ export default function PremiumProducts() {
   // =========================
   // ONE PRODUCT PER CATEGORY
   // =========================
-  const uniqueCategoryProducts = Object.values(
-    products.reduce((acc, product) => {
+ const uniqueCategoryProducts = Object.values(
+  products.reduce((acc, product) => {
 
-      if (!product.category) return acc;
+    if (!product.category) return acc;
 
-      const key = product.category;
+    const key = product.category;
 
-      // first product of category only
-      if (!acc[key]) {
-        acc[key] = product;
-      }
+    const isSherwani =
+      product.name?.toLowerCase().includes("sherwani");
 
-      return acc;
-    }, {})
-  );
+    if (!acc[key]) {
+      acc[key] = product;
+    }
+
+    if (isSherwani) {
+      acc[key] = product; // 🔥 sherwani priority
+    }
+
+    return acc;
+
+  }, {})
+);
 
   return (
    <section className="relative py-28 overflow-hidden bg-[#080808] text-white">
@@ -460,61 +466,98 @@ export default function PremiumProducts() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-20">
 
         {/* HEADER */}
-        <div className="mb-16">
-         <p className="text-[#D4AF37] uppercase tracking-[4px] text-sm mb-3">
-            Featured Collection
-          </p>
+       <motion.div
+  initial={{ opacity: 0, y: 50 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 1 }}
+  className="text-center mb-20"
+>
+  <p className="text-[#D4AF37] tracking-[6px] uppercase text-sm mb-4">
+    Featured Collection
+  </p>
 
-          <h2 className="text-5xl md:text-6xl font-black leading-tight">
-            Premium <span
-  className="
-  block
-  text-transparent
-  bg-clip-text
-  bg-gradient-to-r
-  from-[#F5E6B3]
-  via-[#D4AF37]
-  to-[#B8860B]
-"
->Products</span>
-          </h2>
-          <div
-  className="
-  mt-6
-  h-[2px]
-  w-28
-  bg-gradient-to-r
-  from-transparent
-  via-[#D4AF37]
-  to-transparent
-"
-/>
-        </div>
+  <h2 className="text-4xl md:text-6xl font-black">
+    Premium Fashion
+    <br />
+
+    <span
+      className="
+      bg-gradient-to-r
+      from-[#F5E6B3]
+      via-[#D4AF37]
+      to-[#B8860B]
+      bg-clip-text
+      text-transparent
+      "
+    >
+      Products
+    </span>
+  </h2>
+
+  <p className="text-zinc-400 mt-6 max-w-2xl mx-auto leading-8">
+    Discover our exclusive collection of Sherwani,
+    Indo-Western, Blazer and Wedding Fashion crafted
+    with luxury fabrics and royal elegance.
+  </p>
+
+  <div
+    className="
+    mx-auto
+    mt-8
+    h-[2px]
+    w-32
+    bg-gradient-to-r
+    from-transparent
+    via-[#D4AF37]
+    to-transparent
+    "
+  />
+</motion.div>
 
         {/* GRID */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
-          {uniqueCategoryProducts.slice(0, 8).map((product) => {
+          {uniqueCategoryProducts.slice(0, 8).map((product, index) => {
 
             const variant = product.variants?.[0];
 
             return (
               <motion.div
-                key={product.id}
-                whileHover={{ y: -12 }}
-                className="
-group
-relative
-rounded-[32px]
-overflow-hidden
-bg-[#111111]/80
-backdrop-blur-xl
-border border-[#D4AF37]/15
-hover:border-[#D4AF37]/40
-hover:shadow-[0_0_40px_rgba(212,175,55,0.12)]
-duration-300
-"
-              >
+  key={product.id}
+  initial={{
+    opacity: 0,
+    y: 60,
+  }}
+  whileInView={{
+    opacity: 1,
+    y: 0,
+  }}
+  viewport={{
+    once: true,
+    amount: 0.2,
+  }}
+  transition={{
+    duration: 0.8,
+    delay: index * 0.1,
+  }}
+  whileHover={{
+    y: -12,
+    scale: 1.02,
+  }}
+  className="
+  group
+  relative
+  rounded-[32px]
+  overflow-hidden
+  bg-[#111111]/80
+  backdrop-blur-xl
+  border border-[#D4AF37]/15
+  hover:border-[#D4AF37]/40
+  hover:shadow-[0_0_40px_rgba(212,175,55,0.12)]
+  duration-300
+  "
+>
 
                 {/* IMAGE */}
                 <div className="relative overflow-hidden">
@@ -527,9 +570,14 @@ duration-300
 
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
 
-                 <div className="absolute top-4 left-4 px-4 py-2 rounded-full bg-[#111111]/80 text-[#D4AF37] text-xs border border-[#D4AF37]/20 backdrop-blur-xl">
-                    Luxury Wear
-                  </div>
+                 <div className="absolute top-4 left-4">
+  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#111111]/80 backdrop-blur-xl border border-[#D4AF37]/20">
+    <Crown size={14} className="text-[#D4AF37]" />
+    <span className="text-xs text-[#D4AF37]">
+      Premium Collection
+    </span>
+  </div>
+</div>
 
                   <Link to={`/products?category=${product.category}`}>
                     <div className="absolute top-4 right-4 h-11 w-11 rounded-full bg-gradient-to-br from-[#F5E6B3] via-[#D4AF37] to-[#B8860B] text-black flex items-center justify-center opacity-0 group-hover:opacity-100 duration-300">
@@ -542,7 +590,9 @@ duration-300
                 {/* CONTENT */}
                 <div className="p-6">
 
-                  
+                  <p className="text-xs uppercase tracking-[3px] text-[#D4AF37]">
+  {product.category}
+</p>
 
                  <h3 className="text-2xl font-bold mt-3 group-hover:text-[#D4AF37] duration-300">
                     {product.name}
@@ -570,23 +620,23 @@ duration-300
                     </p>
 
                     <Link to={`/products?category=${product.category}`}>
-                     <button
+                   <button
   className="
-  px-5 py-2
+  px-5
+  py-2
   rounded-xl
-  border border-[#D4AF37]/20
-  bg-[#111111]/80
-  text-white
-  hover:bg-gradient-to-r
-  hover:from-[#F5E6B3]
-  hover:via-[#D4AF37]
-  hover:to-[#B8860B]
-  hover:text-black
+  bg-gradient-to-r
+  from-[#F5E6B3]
+  via-[#D4AF37]
+  to-[#B8860B]
+  text-black
+  font-semibold
+  hover:scale-105
   duration-300
-"
+  "
 >
-                        View
-                      </button>
+  View
+</button>
                     </Link>
 
                   </div>
@@ -600,6 +650,7 @@ duration-300
         </div>
 
       </div>
+      
     </section>
   );
 }
