@@ -221,6 +221,7 @@ export default function Account() {
   onClick={() => navigate("/")}
   className="
     py-3
+    px-4
     rounded-2xl
     bg-gradient-to-r
     from-[#F5E6B3]
@@ -231,10 +232,9 @@ export default function Account() {
     shadow-[0_0_25px_rgba(212,175,55,0.25)]
     hover:scale-[1.02]
     transition-all
-    px-3
   "
 >
-  🏠 Go To Home Page
+  Home
 </button>
           {/* PROFILE */}
           <div className="flex flex-col items-center text-center">
