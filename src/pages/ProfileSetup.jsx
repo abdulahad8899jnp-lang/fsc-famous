@@ -19,6 +19,7 @@ const [address, setAddress] = useState("");
 const [age, setAge] = useState("");
 const [city, setCity] = useState("");
 const [stateName, setStateName] = useState("");
+const [image, setImage] = useState(null);
 
 useEffect(() => {
   if (savedUser) {
@@ -27,9 +28,31 @@ useEffect(() => {
     setAge(savedUser.age || "");
     setCity(savedUser.city || "");
     setStateName(savedUser.state || "");
+    setImage(savedUser?.image || null);
   }
 }, []);
+const handleImageChange = (e) => {
+  const file = e.target.files[0];
 
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onloadend = () => {
+    setImage(reader.result);
+  };
+
+  reader.readAsDataURL(file);
+};
+const handleDeleteImage = () => {
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete your profile image?"
+  );
+
+  if (!confirmDelete) return;
+
+  setImage(null);
+};
 const handleSave = async () => {
   if (!name || !address || !city || !stateName) {
     alert("Please fill all required fields");
@@ -48,6 +71,7 @@ const handleSave = async () => {
   city,
   state: stateName,
   role: "user",
+  image,
 };
 
     await setDoc(
@@ -59,6 +83,7 @@ const handleSave = async () => {
       "user",
       JSON.stringify(userData)
     );
+    window.dispatchEvent(new Event("userUpdated"));
 
     alert(
       savedUser
@@ -107,10 +132,54 @@ return ( <div className="min-h-screen bg-black flex items-center justify-center 
 
       {/* Header */}
       <div className="text-center mb-8">
+<div className="relative w-fit mx-auto">
 
-        <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-[#F5E6B3] via-[#D4AF37] to-[#B8860B] flex items-center justify-center text-black text-4xl font-black shadow-[0_0_30px_rgba(212,175,55,0.25)]">
-          {name?.charAt(0)?.toUpperCase() || "U"}
-        </div>
+  {/* Profile Image */}
+  <div className="w-24 h-24 rounded-full overflow-hidden border border-[#D4AF37]/30 shadow-[0_0_25px_rgba(212,175,55,0.25)]">
+    {image ? (
+      <img
+        src={image}
+        alt="profile"
+        className="w-full h-full object-cover"
+      />
+    ) : (
+      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#F5E6B3] via-[#D4AF37] to-[#B8860B] text-black text-4xl font-black">
+        {name?.charAt(0)?.toUpperCase() || "U"}
+      </div>
+    )}
+  </div>
+
+  {/* Add / Edit Image */}
+  <label className="absolute bottom-0 right-0 bg-black border border-[#D4AF37]/30 text-xs px-2 py-1 rounded-full cursor-pointer hover:bg-[#D4AF37] hover:text-black transition">
+    ✏️
+    <input
+      type="file"
+      accept="image/*"
+      className="hidden"
+      onChange={handleImageChange}
+    />
+  </label>
+
+</div>
+
+{/* Delete Button Below Image */}
+{image && (
+  <button
+    type="button"
+    onClick={handleDeleteImage}
+   className="
+  mt-3
+  block
+  mx-auto
+  text-xs
+  text-red-400
+  hover:text-red-300
+  transition
+"
+  >
+    Delete Profile Image
+  </button>
+)}
 
         <h2 className="text-4xl font-bold text-white mt-5">
           Complete Profile

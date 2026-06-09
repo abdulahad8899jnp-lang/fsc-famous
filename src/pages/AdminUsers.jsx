@@ -353,9 +353,29 @@ if (loading) {
 
       <div className="flex flex-col items-center">
 
-        <div className="w-24 h-24 rounded-full bg-gradient-to-r from-yellow-400 to-yellow-600 flex items-center justify-center text-4xl font-bold text-black mb-4">
-          {selectedUser.name?.charAt(0)?.toUpperCase() || "U"}
-        </div>
+      <div
+  className="
+    w-24
+    h-24
+    rounded-full
+    overflow-hidden
+    border-2
+    border-yellow-500
+    mb-4
+  "
+>
+  {selectedUser?.image ? (
+    <img
+      src={selectedUser.image}
+      alt={selectedUser.name}
+      className="w-full h-full object-cover"
+    />
+  ) : (
+    <div className="w-full h-full bg-gradient-to-r from-yellow-400 to-yellow-600 flex items-center justify-center text-4xl font-bold text-black">
+      {selectedUser?.name?.charAt(0)?.toUpperCase() || "U"}
+    </div>
+  )}
+</div>
 
         <h3 className="text-xl font-bold">
           {selectedUser.name || "No Name"}

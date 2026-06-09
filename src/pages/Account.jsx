@@ -174,7 +174,7 @@ import { useNavigate } from "react-router-dom";
 export default function Account() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [image, setImage] = useState(null);
+  
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
@@ -185,55 +185,11 @@ export default function Account() {
     }
 
     setUser(userData);
-    setImage(userData.image || null);
+    
   }, [navigate]);
 
-  // =========================
-  // IMAGE UPLOAD (WITH CONFIRM)
-  // =========================
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const confirmUpload = window.confirm(
-      "Do you want to upload this image?"
-    );
-
-    if (!confirmUpload) return;
-
-    const reader = new FileReader();
-
-    reader.onloadend = () => {
-      const updatedUser = { ...user, image: reader.result };
-
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-      setUser(updatedUser);
-      setImage(reader.result);
-    };
-
-    reader.readAsDataURL(file);
-  };
-
-  // =========================
-  // IMAGE DELETE (WITH CONFIRM)
-  // =========================
-  const handleDeleteImage = () => {
-    if (!image) return;
-
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete your profile image?"
-    );
-
-    if (!confirmDelete) return;
-
-    const updatedUser = { ...user };
-    delete updatedUser.image;
-
-    localStorage.setItem("user", JSON.stringify(updatedUser));
-
-    setUser(updatedUser);
-    setImage(null);
-  };
+ 
+  
 
   // LOGOUT
   const handleLogout = () => {
@@ -275,6 +231,7 @@ export default function Account() {
     shadow-[0_0_25px_rgba(212,175,55,0.25)]
     hover:scale-[1.02]
     transition-all
+    px-3
   "
 >
   🏠 Go To Home Page
@@ -287,13 +244,13 @@ export default function Account() {
 
               <div className="w-24 h-24 rounded-full overflow-hidden border border-[#D4AF37]/30 shadow-[0_0_25px_rgba(212,175,55,0.25)]">
 
-                {image ? (
-                  <img
-                    src={image}
-                    alt="profile"
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
+               {user?.image ? (
+  <img
+    src={user.image}
+    alt="profile"
+    className="w-full h-full object-cover"
+  />
+) : (
                   <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#F5E6B3] via-[#D4AF37] to-[#B8860B] text-black text-4xl font-black">
                     {user.name?.charAt(0)?.toUpperCase()}
                   </div>
@@ -302,27 +259,11 @@ export default function Account() {
               </div>
 
               {/* UPLOAD BUTTON */}
-              <label className="absolute bottom-0 right-0 bg-black border border-[#D4AF37]/30 text-xs px-2 py-1 rounded-full cursor-pointer hover:bg-[#D4AF37] hover:text-black transition">
-                ✏️
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleImageChange}
-                />
-              </label>
+            
 
             </div>
 
-            {/* DELETE BUTTON */}
-            {image && (
-              <button
-                onClick={handleDeleteImage}
-                className="mt-3 text-xs text-red-400 hover:text-red-300 transition"
-              >
-                Delete Profile Image
-              </button>
-            )}
+            
 
             <h1 className="text-3xl font-bold mt-5">
               {user.name}

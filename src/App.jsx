@@ -74,6 +74,19 @@ useEffect(() => {
   setUser(storedUser);
 }, []);
 
+useEffect(() => {
+  const loadUser = () => {
+    setUser(JSON.parse(localStorage.getItem("user")));
+  };
+
+  loadUser();
+
+  window.addEventListener("userUpdated", loadUser);
+
+  return () => {
+    window.removeEventListener("userUpdated", loadUser);
+  };
+}, []);
   return (
     <OrderProvider>
       <BrowserRouter>
