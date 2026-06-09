@@ -315,8 +315,8 @@ export default function FeaturesSection() {
       {/* Animated Glow */}
       <motion.div
         animate={{
-          x: [0, 40, 0],
-          y: [0, -30, 0],
+          x: [0, -40, 0],
+           y: [0, 30, 0],
         }}
         transition={{
           duration: 12,
@@ -435,13 +435,12 @@ export default function FeaturesSection() {
                 amount: 0.2,
               }}
               transition={{
-                duration: 0.8,
-                delay: index * 0.15,
+                duration: 0.4,
+              
               }}
               whileHover={{
-                y: -10,
-                scale: 1.03,
-              }}
+  y: -5,
+}}
               className="
               group
               relative

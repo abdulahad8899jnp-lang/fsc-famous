@@ -275,25 +275,13 @@ overflow-hidden
          {groupedProducts[cat].map((item, index) => (
   <motion.div
     key={item.id}
-    initial={{
-      opacity: 0,
-      y: 120,
-      scale: 0.9,
-    }}
-    whileInView={{
-      opacity: 1,
-      y: 0,
-      scale: 1,
-    }}
-    viewport={{
-      once: true,
-      amount: 0.3,
-    }}
-    transition={{
-      duration: 1.2,
-      delay: index * 0.15,
-      ease: "easeOut",
-    }}
+    initial={{ opacity: 0, y: 40 }}
+whileInView={{ opacity: 1, y: 0 }}
+viewport={{ once: true }}
+transition={{
+  duration: 0.5,
+  ease: "easeOut",
+}}
   >
     <ProductCard
       item={item}

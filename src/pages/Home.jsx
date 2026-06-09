@@ -53,8 +53,8 @@ export default function Home({ setSelectedProduct }) {
   <section className="max-w-7xl mx-auto px-6 py-24 overflow-hidden">
 
   <motion.div
-    initial={{ opacity: 0, scale: 0.9 }}
-    whileInView={{ opacity: 1, scale: 1 }}
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.7 }}
     className="
@@ -84,7 +84,7 @@ export default function Home({ setSelectedProduct }) {
     <motion.p
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.2 }}
+      transition={{ duration: 0.4 }}
       className="text-[#D4AF37] tracking-[6px] uppercase text-sm"
     >
       Exclusive Collection
@@ -115,7 +115,7 @@ export default function Home({ setSelectedProduct }) {
     <motion.p
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4 }}
+      transition={{ duration: 0.4 }}
       className="text-gray-400 max-w-2xl mx-auto mt-5"
     >
       Discover luxurious Sherwani, Indo-Western, Coat Pant and Blazer Collection crafted
@@ -125,8 +125,8 @@ export default function Home({ setSelectedProduct }) {
     {/* Button */}
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 0.5 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       className="mt-8"
@@ -201,7 +201,7 @@ export default function Home({ setSelectedProduct }) {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.3 }}
+        transition={{ duration: 0.4 }}
         className="text-[#D4AF37] tracking-[6px] uppercase text-sm"
       >
         Founder Message
@@ -211,7 +211,7 @@ export default function Home({ setSelectedProduct }) {
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.4 }}
+        transition={{ duration: 0.4 }}
         className="text-4xl font-bold mt-4"
       >
         Mahboob Alam
@@ -221,7 +221,7 @@ export default function Home({ setSelectedProduct }) {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.5 }}
+        transition={{ duration: 0.4 }}
         className="text-gray-400 mt-6 leading-8"
       >
         With more than 25 years of experience...
@@ -236,8 +236,8 @@ export default function Home({ setSelectedProduct }) {
   <section className="max-w-5xl mx-auto px-6 pb-24 overflow-hidden">
 
   <motion.div
-    initial={{ opacity: 0, scale: 0.9 }}
-    whileInView={{ opacity: 1, scale: 1 }}
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.6 }}
     className="
@@ -282,7 +282,7 @@ export default function Home({ setSelectedProduct }) {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: 0.3 }}
+      transition={{ duration: 0.4 }}
       className="text-gray-400 mt-5"
     >
       Visit our store and discover premium wedding fashion.
@@ -293,7 +293,7 @@ export default function Home({ setSelectedProduct }) {
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ delay: 0.4 }}
+      transition={{ duration: 0.4 }}
       className="flex flex-wrap justify-center gap-4 mt-8"
     >
 
