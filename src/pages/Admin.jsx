@@ -282,11 +282,14 @@ useEffect(() => {
     );
   }
 
+
   alert(
     editId
       ? "Product Updated Successfully"
       : "Product Added Successfully"
   );
+
+
 
   // RESET
   setEditId(null);
@@ -310,15 +313,33 @@ useEffect(() => {
   ]);
 
   fetchProducts();
+  // Product save/update successful
+
+setTimeout(() => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}, 200);
+
 };
+
 
   // =========================
   // DELETE
-  // =========================
-  const deleteProduct = async (id) => {
-    await deleteDoc(doc(db, "products", id));
-    fetchProducts();
-  };
+ const deleteProduct = async (id, productName) => {
+  const confirmDelete = window.confirm(
+    `Are you sure?\n\n"${productName}" product delete karna hai?`
+  );
+
+  if (!confirmDelete) return;
+
+  await deleteDoc(doc(db, "products", id));
+
+  alert("Product Deleted Successfully");
+
+  fetchProducts();
+};
  const deleteCategory = (value) => {
   if (!value) return;
 
@@ -605,6 +626,17 @@ const handleLogout = async () => {
           />
         )}
       </div>
+      {/* RATING */}
+<input
+  type="number"
+  min="1"
+  max="5"
+  step="0.1"
+  placeholder="Rating (1 - 5)"
+  value={rating}
+  onChange={(e) => setRating(e.target.value)}
+  className="w-full p-3 sm:p-4 mb-4 bg-zinc-900 rounded-2xl"
+/>
 
       {/* DESCRIPTION */}
       <textarea
@@ -820,18 +852,18 @@ const handleLogout = async () => {
                     </button>
 
                     <button
-                      onClick={() =>
-                        deleteProduct(item.id)
-                      }
-                      className="
-                        bg-red-500
-                        px-4
-                        py-2
-                        rounded-xl
-                      "
-                    >
-                      Delete
-                    </button>
+  onClick={() =>
+    deleteProduct(item.id, item.name)
+  }
+  className="
+    bg-red-500
+    px-4
+    py-2
+    rounded-xl
+  "
+>
+  Delete
+</button>
 
                   </div>
 
