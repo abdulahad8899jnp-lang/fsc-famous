@@ -35,7 +35,7 @@ export default function Admin() {
   const [customSize, setCustomSize] = useState("");
   const [products, setProducts] = useState([]);
   const [openCategory, setOpenCategory] = useState(null);
-
+const [searchTerm, setSearchTerm] = useState("");
   const [variants, setVariants] = useState([
     {
       image: "",
@@ -324,7 +324,19 @@ setTimeout(() => {
 
 };
 
+const filteredProducts = products.filter((product) => {
+  const search = searchTerm.toLowerCase();
 
+  return (
+    product.name?.toLowerCase().includes(search) ||
+    product.category?.toLowerCase().includes(search) ||
+    product.variants?.some(
+      (v) =>
+        v.articleNo?.toLowerCase().includes(search) ||
+        v.color?.toLowerCase().includes(search)
+    )
+  );
+});
   // =========================
   // DELETE
  const deleteProduct = async (id, productName) => {
@@ -342,6 +354,8 @@ setTimeout(() => {
 };
  const deleteCategory = (value) => {
   if (!value) return;
+
+  
 
   const isConfirmed = window.confirm(
     `"${value}" category delete karni hai?`
@@ -735,13 +749,36 @@ const handleLogout = async () => {
       >
         {editId ? "UPDATE PRODUCT" : "SAVE PRODUCT"}
       </button>
-
+<div className="mb-6">
+  <input
+    type="text"
+    placeholder="Search by Product Name or Article No..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    className="
+      w-full
+      p-4
+      bg-zinc-900
+      border
+      border-zinc-700
+      rounded-2xl
+      text-white
+      placeholder:text-zinc-400
+      focus:outline-none
+      focus:border-yellow-400
+    "
+  />
+</div>
       {/* PRODUCTS */}
       {/* PRODUCTS BY CATEGORY */}
 
 <div className="space-y-4">
 
-  {[...new Set(products.map((p) => p.category))]
+  {[
+  ...new Set(
+    filteredProducts.map((p) => p.category)
+  ),
+]
     .filter(Boolean)
     .map((cat) => (
 
@@ -783,11 +820,11 @@ const handleLogout = async () => {
 
           <div className="p-4 border-t border-zinc-800 space-y-3">
 
-            {products
-              .filter(
-                (item) =>
-                  item.category === cat
-              )
+           {filteredProducts
+  .filter(
+    (item) =>
+      item.category === cat
+  )
               .map((item) => (
 
                 <div
