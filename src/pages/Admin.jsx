@@ -36,6 +36,7 @@ export default function Admin() {
   const [customSize, setCustomSize] = useState("");
   const [products, setProducts] = useState([]);
   const [openCategory, setOpenCategory] = useState(null);
+  const [customSizes, setCustomSizes] = useState([""]);
 const [searchTerm, setSearchTerm] = useState("");
   const [variants, setVariants] = useState([
     {
@@ -46,6 +47,24 @@ const [searchTerm, setSearchTerm] = useState("");
       size: "",
     },
   ]);
+
+
+  const addCustomSizeField = () => {
+  setCustomSizes([...customSizes, ""]);
+};
+
+const updateCustomSize = (index, value) => {
+  const updated = [...customSizes];
+  updated[index] = value;
+  setCustomSizes(updated);
+};
+
+const removeCustomSize = (index) => {
+  const updated = customSizes.filter(
+    (_, i) => i !== index
+  );
+  setCustomSizes(updated);
+};
 
   // =========================
   // CATEGORY OPTIONS
@@ -253,14 +272,16 @@ useEffect(() => {
     fabric,
     stock,
 categoryOrder,
-    sizes: sizes.includes("Custom")
-      ? [
-          ...sizes.filter(
-            (s) => s !== "Custom"
-          ),
-          customSize,
-        ]
-      : sizes,
+   sizes: sizes.includes("Custom")
+  ? [
+      ...sizes.filter(
+        (s) => s !== "Custom"
+      ),
+      ...customSizes.filter(
+        (s) => s.trim() !== ""
+      ),
+    ]
+  : sizes,
 
     variants: variants.map((v) => ({
       image: v.image,
@@ -634,14 +655,50 @@ const handleLogout = async () => {
         </div>
 
         {sizes.includes("Custom") && (
-          <input
-            placeholder="Enter Custom Size"
-             required
-            value={customSize}
-            onChange={(e) => setCustomSize(e.target.value)}
-            className="w-full mt-4 p-3 bg-zinc-900 rounded-2xl"
-          />
+  <div className="mt-4 space-y-3">
+
+    {customSizes.map((size, index) => (
+      <div
+        key={index}
+        className="flex gap-2"
+      >
+        <input
+          type="text"
+          placeholder={`Custom Size ${index + 1}`}
+          value={size}
+          onChange={(e) =>
+            updateCustomSize(
+              index,
+              e.target.value
+            )
+          }
+          className="flex-1 p-3 bg-zinc-900 rounded-2xl"
+        />
+
+        {customSizes.length > 1 && (
+          <button
+            type="button"
+            onClick={() =>
+              removeCustomSize(index)
+            }
+            className="bg-red-500 px-4 rounded-xl"
+          >
+            ✕
+          </button>
         )}
+      </div>
+    ))}
+
+    <button
+      type="button"
+      onClick={addCustomSizeField}
+      className="bg-yellow-400 text-black px-4 py-2 rounded-xl font-bold"
+    >
+      + Add Size
+    </button>
+
+  </div>
+)}
       </div>
       {/* RATING */}
 <input
