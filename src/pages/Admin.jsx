@@ -34,6 +34,7 @@ export default function Admin() {
   const [stock, setStock] = useState("");
   const [sizes, setSizes] = useState([]);
   const [customSize, setCustomSize] = useState("");
+  const [variantWiseSizes, setVariantWiseSizes] = useState(false);
   const [products, setProducts] = useState([]);
   const [openCategory, setOpenCategory] = useState(null);
   const [customSizes, setCustomSizes] = useState([""]);
@@ -44,7 +45,8 @@ const [searchTerm, setSearchTerm] = useState("");
       price: "",
       color: "",
       articleNo: "",
-      size: "",
+     sizes: [],
+       customSizes: [],
     },
   ]);
 
@@ -199,6 +201,7 @@ useEffect(() => {
         price: "",
         color: "",
         articleNo: "",
+          sizes: [],
       },
     ]);
   };
@@ -247,7 +250,7 @@ useEffect(() => {
     return;
   }
 
-  if (sizes.length === 0) {
+  if (!variantWiseSizes && sizes.length === 0) {
     alert("Please select at least one size");
     return;
   }
@@ -288,7 +291,14 @@ categoryOrder,
       price: Number(v.price),
       color: v.color,
       articleNo: v.articleNo,
-      size: v.size || "",
+   sizes: v.sizes?.includes("Custom")
+  ? [
+      ...v.sizes.filter(
+        (s) => s !== "Custom"
+      ),
+      ...(v.customSizes || [])
+    ]
+  : v.sizes || [],
     })),
 
     createdAt: Date.now(),
@@ -628,8 +638,23 @@ const handleLogout = async () => {
   }
   className="w-full p-3 sm:p-4 mb-4 bg-zinc-900 rounded-2xl"
 />
+<div className="mb-4">
+  <label className="flex items-center gap-3">
+    <input
+      type="checkbox"
+      checked={variantWiseSizes}
+      onChange={(e) =>
+        setVariantWiseSizes(e.target.checked)
+      }
+    />
+
+    Variant Wise Sizes
+  </label>
+</div>
+
       {/* SIZES */}
-      <div className="mb-6">
+      {!variantWiseSizes && (
+    <div className="mb-6">
         <p className="mb-3 font-bold">Select Sizes</p>
 
         <div className="flex flex-wrap gap-2 sm:gap-3">
@@ -655,13 +680,13 @@ const handleLogout = async () => {
         </div>
 
         {sizes.includes("Custom") && (
-  <div className="mt-4 space-y-3">
+         <div className="mt-4 space-y-3">
 
-    {customSizes.map((size, index) => (
-      <div
+          {customSizes.map((size, index) => (
+         <div
         key={index}
         className="flex gap-2"
-      >
+       >
         <input
           type="text"
           placeholder={`Custom Size ${index + 1}`}
@@ -686,20 +711,20 @@ const handleLogout = async () => {
             ✕
           </button>
         )}
+       </div>
+         ))}
+
+        <button
+         type="button"
+          onClick={addCustomSizeField}
+            className="bg-yellow-400 text-black px-4 py-2 rounded-xl font-bold"
+       >
+         + Add Size
+       </button>
+
       </div>
-    ))}
-
-    <button
-      type="button"
-      onClick={addCustomSizeField}
-      className="bg-yellow-400 text-black px-4 py-2 rounded-xl font-bold"
-    >
-      + Add Size
-    </button>
-
-  </div>
 )}
-      </div>
+      </div>)}
       {/* RATING */}
 <input
   type="number"
@@ -786,8 +811,113 @@ const handleLogout = async () => {
               }
               className="w-full p-2 bg-zinc-800 mb-2 rounded-xl"
             />
+            {variantWiseSizes && (
+  <div className="mt-3">
+    <p className="mb-2 font-semibold">
+      Variant Sizes
+    </p>
 
-            
+    <div className="flex flex-wrap gap-2">
+     {["34","36","38","40","42","44","Free Size","Custom"].map((size) => (
+        <label
+          key={size}
+          className="flex items-center gap-2 bg-zinc-800 px-3 py-2 rounded-xl"
+        >
+          <input
+            type="checkbox"
+            checked={v.sizes?.includes(size)}
+            onChange={(e) => {
+              const updated = [...variants];
+
+              if (!updated[i].sizes)
+                updated[i].sizes = [];
+
+              if (e.target.checked) {
+                updated[i].sizes.push(size);
+              } else {
+                updated[i].sizes =
+                  updated[i].sizes.filter(
+                    (s) => s !== size
+                  );
+              }
+
+              setVariants(updated);
+            }}
+          />
+          {size}
+        </label>
+      ))}
+    </div>
+  </div>
+)}
+
+        {variantWiseSizes &&
+ v.sizes?.includes("Custom") && (
+  <div className="mt-3 space-y-2">
+
+    {(v.customSizes || [""]).map(
+      (size, index) => (
+        <div
+          key={index}
+          className="flex gap-2"
+        >
+          <input
+            type="text"
+            placeholder={`Custom Size ${index + 1}`}
+            value={size}
+            onChange={(e) => {
+              const updated = [...variants];
+
+              if (!updated[i].customSizes)
+                updated[i].customSizes = [""];
+
+              updated[i].customSizes[index] =
+                e.target.value;
+
+              setVariants(updated);
+            }}
+            className="flex-1 p-2 bg-zinc-800 rounded-xl"
+          />
+
+          <button
+            type="button"
+            onClick={() => {
+              const updated = [...variants];
+
+              updated[i].customSizes =
+                updated[i].customSizes.filter(
+                  (_, idx) => idx !== index
+                );
+
+              setVariants(updated);
+            }}
+            className="bg-red-500 px-3 rounded-xl"
+          >
+            ✕
+          </button>
+        </div>
+      )
+    )}
+
+    <button
+      type="button"
+      onClick={() => {
+        const updated = [...variants];
+
+        if (!updated[i].customSizes)
+          updated[i].customSizes = [];
+
+        updated[i].customSizes.push("");
+
+        setVariants(updated);
+      }}
+      className="bg-yellow-400 text-black px-4 py-2 rounded-xl"
+    >
+      + Add Custom Size
+    </button>
+
+  </div>
+)}    
 
             {variants.length > 1 && (
               <button
