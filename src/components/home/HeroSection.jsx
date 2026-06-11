@@ -297,13 +297,13 @@ export default function HeroSection() {
             </motion.button>
           </a>
 
-          <a href="/products" className="w-full sm:w-auto">
+          <a href="/contact" className="w-full sm:w-auto">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="w-full sm:w-auto px-7 py-3 border border-[#D4AF37] text-[#D4AF37] rounded-full whitespace-nowrap"
             >
-              Explore Collection
+              Contact Us
             </motion.button>
           </a>
         </motion.div>
