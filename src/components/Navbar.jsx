@@ -63,18 +63,19 @@ import { useLocation } from "react-router-dom";
 export default function Navbar() {
    const location = useLocation();
 
-  const hideNavbarRoutes = [
-    "/admin",
-    "/admin/users",
-    "/admin/orders",
-    ,"/account",
-    ,"/profile-setup"
-    ,"/my-orders"
-  ];
+const shouldHideNavbar =
+  location.pathname.startsWith("/admin/users") ||
+   location.pathname.startsWith("/admin/orders") ||
+  location.pathname === "/account" ||
+  location.pathname === "/admin" ||
+  location.pathname === "/profile-setup" ||
+  location.pathname === "/my-orders" ||
+  location.pathname === "/checkout" ||
+  location.pathname.startsWith("/order-success/");
 
-  if (hideNavbarRoutes.includes(location.pathname)) {
-    return null;
-  }
+if (shouldHideNavbar) {
+  return null;
+}
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
