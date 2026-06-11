@@ -17,7 +17,7 @@ export default function ProductPage() {
 
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState(urlCategory || "All");
+const [category, setCategory] = useState(urlCategory || "All");
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -68,12 +68,16 @@ useEffect(() => {
   // =========================
   // UNIQUE CATEGORIES
   // =========================
-  const categories = [
-    "All",
-    ...Array.from(
-      new Set(products.map((item) => item.category).filter(Boolean))
-    ),
-  ];
+ const categories = [
+  "All",
+  ...Array.from(
+    new Set(products.map((item) => item.category).filter(Boolean))
+  ).sort((a, b) => {
+    if (a.toLowerCase() === "sherwani") return -1;
+    if (b.toLowerCase() === "sherwani") return 1;
+    return a.localeCompare(b);
+  }),
+];
 
   // =========================
   // GROUP PRODUCTS BY CATEGORY (IMPORTANT FIX)
@@ -108,6 +112,19 @@ useEffect(() => {
 
     return groups;
   }, [products, search, category]);
+  
+  
+
+
+  const sortedGroupKeys = Object.keys(groupedProducts).sort((a, b) => {
+  const aSherwani = a.toLowerCase().includes("sherwani");
+  const bSherwani = b.toLowerCase().includes("sherwani");
+
+  if (aSherwani && !bSherwani) return -1;
+  if (!aSherwani && bSherwani) return 1;
+
+  return a.localeCompare(b);
+});
  
 if (loading) {
   return (
@@ -248,7 +265,7 @@ overflow-hidden
   Products
   </p>
     {/* PRODUCT GROUPS */}
-    {Object.keys(groupedProducts).map(
+   {sortedGroupKeys.map(
       (cat) =>
         groupedProducts[cat].length > 0 && (
           <div key={cat} className="mb-24">

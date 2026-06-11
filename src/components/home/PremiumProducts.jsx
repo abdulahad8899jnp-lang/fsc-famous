@@ -455,6 +455,11 @@ export default function PremiumProducts() {
 
   }, {})
 );
+const sortedProducts = uniqueCategoryProducts.sort((a, b) => {
+  if (a.category?.toLowerCase() === "sherwani") return -1;
+  if (b.category?.toLowerCase() === "sherwani") return 1;
+  return 0;
+});
 
   return (
    <section className="relative py-28 overflow-hidden bg-[#080808] text-white">
@@ -518,7 +523,7 @@ export default function PremiumProducts() {
         {/* GRID */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
-          {uniqueCategoryProducts.slice(0, 8).map((product, index) => {
+      {sortedProducts.slice(0, 8).map((product, index) => {
 
             const variant = product.variants?.[0];
 

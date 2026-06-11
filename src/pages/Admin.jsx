@@ -26,6 +26,7 @@ export default function Admin() {
   const [editId, setEditId] = useState(null);
   const [name, setName] = useState("");
   const [category, setCategory] = useState("Sherwani");
+  const [categoryOrder, setCategoryOrder] = useState(999);
   const [newCategory, setNewCategory] = useState("");
   const [rating, setRating] = useState("4.5");
   const [description, setDescription] = useState("");
@@ -200,12 +201,14 @@ useEffect(() => {
     setEditId(item.id);
     setName(item.name || "");
     setCategory(item.category || "");
+    setCategoryOrder(item.categoryOrder || 999);
     setRating(item.rating || "4.5");
     setDescription(item.description || "");
     setFabric(item.fabric || "");
     setStock(item.stock || "");
     setSizes(item.sizes || []);
     setVariants(item.variants || []);
+    
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -249,7 +252,7 @@ useEffect(() => {
     description,
     fabric,
     stock,
-
+categoryOrder,
     sizes: sizes.includes("Custom")
       ? [
           ...sizes.filter(
