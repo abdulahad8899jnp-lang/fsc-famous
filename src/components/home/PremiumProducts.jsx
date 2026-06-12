@@ -605,17 +605,22 @@ const sortedProducts = uniqueCategoryProducts.sort((a, b) => {
 
                   {/* STARS */}
                   <div className="flex items-center gap-1 mt-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        size={16}
-                        className="fill-[#D4AF37] text-[#D4AF37]"
-                      />
-                    ))}
-                    <span className="text-zinc-400 text-sm ml-2">
-                      (4.9)
-                    </span>
-                  </div>
+  {[1, 2, 3, 4, 5].map((star) => (
+    <Star
+      key={star}
+      size={16}
+      className={
+        star <= Math.round(product.rating || 0)
+          ? "fill-[#D4AF37] text-[#D4AF37]"
+          : "text-zinc-600"
+      }
+    />
+  ))}
+
+  <span className="text-zinc-400 text-sm ml-2">
+    ({product.rating ?? "N/A"})
+  </span>
+</div>
 
                   {/* PRICE */}
                   <div className="flex items-center justify-between mt-6">

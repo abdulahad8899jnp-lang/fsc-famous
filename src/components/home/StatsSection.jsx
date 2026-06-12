@@ -266,20 +266,23 @@ export default function StatsSection() {
 
               <div className="relative z-10">
 
-                <h2
-                  className="
-                  text-5xl
-                  font-black
-                  bg-gradient-to-r
-                  from-[#F5E6B3]
-                  via-[#D4AF37]
-                  to-[#B8860B]
-                  bg-clip-text
-                  text-transparent
-                  "
-                >
-                  {item.value}
-                </h2>
+               <h2
+  className="
+  text-3xl
+  sm:text-4xl
+  md:text-5xl
+  font-black
+  bg-gradient-to-r
+  from-[#F5E6B3]
+  via-[#D4AF37]
+  to-[#B8860B]
+  bg-clip-text
+  text-transparent
+  break-words
+  "
+>
+  {item.value}
+</h2>
 
                 <div
                   className="
