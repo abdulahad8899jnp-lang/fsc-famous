@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
-
+import emailjs from "emailjs-com";
 export default function ProfileSetup() {
 const { state } = useLocation();
 const navigate = useNavigate();
@@ -78,6 +78,17 @@ const handleSave = async () => {
       doc(db, "users", phone),
       userData
     );
+   await emailjs.send(
+  "abdul_123",
+  "template_6c95c0w",
+  {
+    type: "New User Registration",
+    name,
+    phone,
+    time: new Date().toLocaleString(),
+  },
+  "ycHsafXcBA10pgpRz"
+);
 
     localStorage.setItem(
       "user",

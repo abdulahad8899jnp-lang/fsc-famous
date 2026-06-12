@@ -1,4 +1,4 @@
-
+import emailjs from "emailjs-com";
 import { useState } from "react";
 import { db } from "../firebase/firebase";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
@@ -8,7 +8,23 @@ export default function UserLogin() {
   const [phone, setPhone] = useState("");
  
   const navigate = useNavigate();
-
+const sendLoginEmail = async (phone, name) => {
+  try {
+    return await emailjs.send(
+      "abdul_123",
+      "template_6c95c0w",
+      {
+        type: "Existing User Login",
+        name: name,
+        phone: phone,
+        time: new Date().toLocaleString(),
+      },
+      "ycHsafXcBA10pgpRz"
+    );
+  } catch (err) {
+    console.error("Email Failed:", err);
+  }
+};
  const handleLogin = async () => {
   if (!/^[0-9]{10}$/.test(phone)) {
     alert("Phone must be 10 digits");
@@ -24,13 +40,16 @@ export default function UserLogin() {
 
   localStorage.setItem("user", JSON.stringify(userData));
 
-  // 🔥 YE ADD KARNA HAI (replace nahi)
   await setDoc(doc(db, "users", phone), {
     ...userData,
-    loginAt: serverTimestamp()
+    loginAt: serverTimestamp(),
   });
 
+  // Name + Phone email me bhejo
+  await sendLoginEmail(phone, userData.name);
+
   alert("Login Successful");
+
   navigate("/account");
 }else {
       navigate("/profile-setup", {
