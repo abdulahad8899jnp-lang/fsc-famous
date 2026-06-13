@@ -100,7 +100,10 @@ const removeCustomSize = (index) => {
       }))
     );
   };
-  
+  const fetchUserCount = async () => {
+  const snap = await getDocs(collection(db, "users"));
+  setUserCount(snap.size);
+};
 
   const uploadImage = async (file, index) => {
 
@@ -436,7 +439,9 @@ const handleLogout = async () => {
 >
   All Users
 
-  
+  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+    {userCount}
+  </span>
 </button>
 <button
   onClick={() => navigate("/admin/login")}
