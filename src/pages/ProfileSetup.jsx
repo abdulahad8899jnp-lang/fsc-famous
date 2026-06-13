@@ -209,7 +209,7 @@ return ( <div className="min-h-screen bg-black flex items-center justify-center 
       </div>
 
       {/* Form */}
-      <div className="grid md:grid-cols-2 gap-4">
+   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
         <input
           placeholder="Full Name"
