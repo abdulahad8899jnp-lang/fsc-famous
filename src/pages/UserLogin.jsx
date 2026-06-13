@@ -39,6 +39,9 @@ const sendLoginEmail = async (phone, name) => {
   const userData = userSnap.data();
 
   localStorage.setItem("user", JSON.stringify(userData));
+window.dispatchEvent(
+  new Event("userUpdated")
+);
 
   await setDoc(doc(db, "users", phone), {
     ...userData,

@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import { auth,db, storage  } from "../firebase/firebase";
-
+import { query, where } from "firebase/firestore";
 
 import {
   collection,
@@ -40,7 +40,7 @@ export default function Admin() {
   const [openCategory, setOpenCategory] = useState(null);
   const [customSizes, setCustomSizes] = useState([""]);
 const [searchTerm, setSearchTerm] = useState("");
-
+const [userCount, setUserCount] = useState(0);
   const [variants, setVariants] = useState([
     {
       image: "",
@@ -100,7 +100,10 @@ const removeCustomSize = (index) => {
       }))
     );
   };
-  
+  const fetchUserCount = async () => {
+  const snap = await getDocs(collection(db, "users"));
+  setUserCount(snap.size);
+};
 
   const uploadImage = async (file, index) => {
 
@@ -435,6 +438,10 @@ const handleLogout = async () => {
   className="relative bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl"
 >
   All Users
+
+  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+    {userCount}
+  </span>
 </button>
 <button
   onClick={() => navigate("/admin/login")}

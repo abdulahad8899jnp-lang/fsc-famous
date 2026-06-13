@@ -72,7 +72,8 @@ const handleSave = async () => {
   state: stateName,
   role: "user",
   image,
- 
+     isSeen: false,
+  createdAt: Date.now(),
 };
 
     await setDoc(
