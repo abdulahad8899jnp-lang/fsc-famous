@@ -31,18 +31,30 @@ useEffect(() => {
     setImage(savedUser?.image || null);
   }
 }, []);
-const handleImageChange = (e) => {
-  const file = e.target.files[0];
-
+const uploadImage = async (file) => {
   if (!file) return;
 
-  const reader = new FileReader();
+  const data = new FormData();
+  data.append("file", file);
+  data.append("upload_preset", "products");
 
-  reader.onloadend = () => {
-    setImage(reader.result);
-  };
+  const res = await fetch(
+    "https://api.cloudinary.com/v1_1/dralkl52u/image/upload",
+    {
+      method: "POST",
+      body: data,
+    }
+  );
 
-  reader.readAsDataURL(file);
+  const result = await res.json();
+  return result.secure_url;
+};
+const handleImageChange = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const url = await uploadImage(file);
+  setImage(url);
 };
 const handleDeleteImage = () => {
   const confirmDelete = window.confirm(
