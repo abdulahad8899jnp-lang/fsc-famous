@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { auth,db, storage  } from "../firebase/firebase";
 
+
 import {
   collection,
   addDoc,
@@ -39,6 +40,7 @@ export default function Admin() {
   const [openCategory, setOpenCategory] = useState(null);
   const [customSizes, setCustomSizes] = useState([""]);
 const [searchTerm, setSearchTerm] = useState("");
+
   const [variants, setVariants] = useState([
     {
       image: "",
@@ -49,6 +51,7 @@ const [searchTerm, setSearchTerm] = useState("");
        customSizes: [],
     },
   ]);
+ 
 
 
   const addCustomSizeField = () => {
@@ -97,6 +100,7 @@ const removeCustomSize = (index) => {
       }))
     );
   };
+  
 
   const uploadImage = async (file, index) => {
 
@@ -384,7 +388,8 @@ const filteredProducts = products.filter((product) => {
 
   alert("Product Deleted Successfully");
 
-  fetchProducts();
+fetchProducts();
+fetchUserCount();
 };
  const deleteCategory = (value) => {
   if (!value) return;
@@ -427,7 +432,7 @@ const handleLogout = async () => {
   <div className="flex gap-3 flex-wrap">
       <button
   onClick={() => navigate("/admin/users")}
-  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl"
+  className="relative bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl"
 >
   All Users
 </button>

@@ -72,6 +72,7 @@ const handleSave = async () => {
   state: stateName,
   role: "user",
   image,
+ 
 };
 
     await setDoc(
@@ -260,22 +261,94 @@ return ( <div className="min-h-screen bg-black flex items-center justify-center 
           "
         />
 
-        <input
-          placeholder="State"
-          value={stateName}
-          onChange={(e) => setStateName(e.target.value)}
-          className="
-            bg-black/40
-            border
-            border-[#D4AF37]/10
-            rounded-2xl
-            p-4
-            text-white
-            outline-none
-            focus:border-[#D4AF37]
-            transition-all
-          "
-        />
+        <select
+  value={stateName}
+  onChange={(e) => setStateName(e.target.value)}
+  className="
+    bg-black/40
+    border
+    border-[#D4AF37]/10
+    rounded-2xl
+    p-4
+    text-white
+    outline-none
+    focus:border-[#D4AF37]
+    transition-all
+  "
+>
+  <option value="" className="bg-[#111]">
+    Select State / Country
+  </option>
+
+  {/* Indian States */}
+  <option value="Andhra Pradesh" className="bg-[#111]">Andhra Pradesh</option>
+  <option value="Arunachal Pradesh" className="bg-[#111]">Arunachal Pradesh</option>
+  <option value="Assam" className="bg-[#111]">Assam</option>
+  <option value="Bihar" className="bg-[#111]">Bihar</option>
+  <option value="Chhattisgarh" className="bg-[#111]">Chhattisgarh</option>
+  <option value="Goa" className="bg-[#111]">Goa</option>
+  <option value="Gujarat" className="bg-[#111]">Gujarat</option>
+  <option value="Haryana" className="bg-[#111]">Haryana</option>
+  <option value="Himachal Pradesh" className="bg-[#111]">Himachal Pradesh</option>
+  <option value="Jharkhand" className="bg-[#111]">Jharkhand</option>
+  <option value="Karnataka" className="bg-[#111]">Karnataka</option>
+  <option value="Kerala" className="bg-[#111]">Kerala</option>
+  <option value="Madhya Pradesh" className="bg-[#111]">Madhya Pradesh</option>
+  <option value="Maharashtra" className="bg-[#111]">Maharashtra</option>
+  <option value="Manipur" className="bg-[#111]">Manipur</option>
+  <option value="Meghalaya" className="bg-[#111]">Meghalaya</option>
+  <option value="Mizoram" className="bg-[#111]">Mizoram</option>
+  <option value="Nagaland" className="bg-[#111]">Nagaland</option>
+  <option value="Odisha" className="bg-[#111]">Odisha</option>
+  <option value="Punjab" className="bg-[#111]">Punjab</option>
+  <option value="Rajasthan" className="bg-[#111]">Rajasthan</option>
+  <option value="Sikkim" className="bg-[#111]">Sikkim</option>
+  <option value="Tamil Nadu" className="bg-[#111]">Tamil Nadu</option>
+  <option value="Telangana" className="bg-[#111]">Telangana</option>
+  <option value="Tripura" className="bg-[#111]">Tripura</option>
+  <option value="Uttar Pradesh" className="bg-[#111]">Uttar Pradesh</option>
+  <option value="Uttarakhand" className="bg-[#111]">Uttarakhand</option>
+  <option value="West Bengal" className="bg-[#111]">West Bengal</option>
+
+  {/* Union Territories */}
+  <option value="Andaman and Nicobar Islands" className="bg-[#111]">
+    Andaman and Nicobar Islands
+  </option>
+  <option value="Chandigarh" className="bg-[#111]">Chandigarh</option>
+  <option value="Dadra and Nagar Haveli and Daman and Diu" className="bg-[#111]">
+    Dadra and Nagar Haveli and Daman and Diu
+  </option>
+  <option value="Delhi" className="bg-[#111]">Delhi</option>
+  <option value="Jammu and Kashmir" className="bg-[#111]">
+    Jammu and Kashmir
+  </option>
+  <option value="Ladakh" className="bg-[#111]">Ladakh</option>
+  <option value="Lakshadweep" className="bg-[#111]">Lakshadweep</option>
+  <option value="Puducherry" className="bg-[#111]">Puducherry</option>
+
+  {/* Other Country */}
+  <option value="Other Country" className="bg-[#111]">
+    🌍 Other Country
+  </option>
+</select>
+{stateName === "Other Country" && (
+  <input
+    type="text"
+    placeholder="Enter Country Name"
+    className="
+      mt-4
+      bg-black/40
+      border
+      border-[#D4AF37]/10
+      rounded-2xl
+      p-4
+      text-white
+      outline-none
+      focus:border-[#D4AF37]
+      transition-all
+    "
+  />
+)}
 
       </div>
 
