@@ -152,7 +152,7 @@ useEffect(() => {
     } else {
       const email = user.email?.trim().toLowerCase();
 
-      if (email !== "abdul@gmail.com") {
+      if (email !== "1983mahboob@gmail.com") {
         signOut(auth);
         navigate("/admin/login");
         return;
@@ -439,9 +439,7 @@ const handleLogout = async () => {
 >
   All Users
 
-  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">
-    {userCount}
-  </span>
+  
 </button>
 <button
   onClick={() => navigate("/admin/login")}
