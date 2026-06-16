@@ -93,15 +93,15 @@ const handleSave = async () => {
       userData
     );
    await emailjs.send(
-  "abdul_123",
-  "template_6c95c0w",
+  "Mahboob_alam",
+  "template_wliyowi",
   {
     type: "New User Registration",
     name,
     phone,
     time: new Date().toLocaleString(),
   },
-  "ycHsafXcBA10pgpRz"
+  "GmMA_45sLEmdaJ7vT"
 );
 
     localStorage.setItem(
