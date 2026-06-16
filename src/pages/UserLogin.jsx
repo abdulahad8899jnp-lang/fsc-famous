@@ -11,15 +11,15 @@ export default function UserLogin() {
 const sendLoginEmail = async (phone, name) => {
   try {
     return await emailjs.send(
-      "abdul_123",
-      "template_6c95c0w",
+      "Mahboob_alam",
+      "template_wliyowi",
       {
         type: "Existing User Login",
         name: name,
         phone: phone,
         time: new Date().toLocaleString(),
       },
-      "ycHsafXcBA10pgpRz"
+      "GmMA_45sLEmdaJ7vT"
     );
   } catch (err) {
     console.error("Email Failed:", err);
