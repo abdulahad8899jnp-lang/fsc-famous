@@ -115,7 +115,7 @@ if (shouldHideNavbar) {
         {/* Logo */}
        <Link to="/" className="flex items-center gap-3">
   <img
-    src="/logo.jpeg"
+    src="/logo.png"
     alt="Famous Sherwani Collection"
     className="w-12 h-12 object-contain"
   />
