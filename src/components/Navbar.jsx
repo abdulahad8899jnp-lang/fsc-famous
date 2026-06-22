@@ -78,6 +78,7 @@ if (shouldHideNavbar) {
 }
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showLogo, setShowLogo] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -113,28 +114,33 @@ if (shouldHideNavbar) {
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
 
         {/* Logo */}
-       <Link to="/" className="flex items-center gap-3">
+  <div className="flex items-center gap-3">
+
   <img
     src="/logo.png"
     alt="Famous Sherwani Collection"
-    className="w-12 h-12 object-contain"
+    className="w-12 h-12 object-contain cursor-pointer"
+    onClick={() => setShowLogo(true)}
   />
 
-  <h1
-    className="
-      text-xl md:text-3xl
-      font-black
-      bg-gradient-to-r
-      from-[#F5E6B3]
-      via-[#D4AF37]
-      to-[#B8860B]
-      bg-clip-text
-      text-transparent
-    "
-  >
-    Famous Sherwani
-  </h1>
-</Link>
+  <Link to="/">
+    <h1
+      className="
+        text-xl md:text-3xl
+        font-black
+        bg-gradient-to-r
+        from-[#F5E6B3]
+        via-[#D4AF37]
+        to-[#B8860B]
+        bg-clip-text
+        text-transparent
+      "
+    >
+      Famous Sherwani
+    </h1>
+  </Link>
+
+</div>
 
         {/* Desktop Menu */}
         <nav className="hidden lg:flex items-center gap-8">
@@ -248,6 +254,55 @@ if (shouldHideNavbar) {
           </motion.div>
         )}
       </AnimatePresence>
+      {showLogo && (
+  <div
+    className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-[9999] p-4"
+    onClick={() => setShowLogo(false)}
+  >
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8, y: 30 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="
+      relative
+      bg-[#111111]
+      border border-[#D4AF37]/30
+      rounded-[32px]
+      p-6
+      max-w-md w-full
+      shadow-[0_0_50px_rgba(212,175,55,0.2)]
+      "
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        onClick={() => setShowLogo(false)}
+        className="absolute top-3 right-3 text-white text-xl"
+      >
+        ✕
+      </button>
+
+      <div className="text-center">
+        <img
+          src="/logo.png"
+          alt="Logo"
+          className="w-40 h-40 mx-auto object-contain"
+        />
+
+       <h2
+  className="mt-4 text-2xl font-bold text-[#D4AF37] cursor-pointer"
+  onDoubleClick={() => window.location.href = "/admin/login"}
+>
+  Famous Sherwani Collection
+</h2>
+
+        <p className="mt-2 text-zinc-400 text-sm">
+          Premium Wedding & Royal Fashion Collection
+        </p>
+      </div>
+    </motion.div>
+  </div>
+)}
     </header>
   );
 }
