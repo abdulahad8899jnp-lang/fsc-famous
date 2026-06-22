@@ -237,17 +237,24 @@ export default function HeroSection() {
 <div className="absolute inset-0">
   <AnimatePresence mode="wait">
     <motion.img
-      key={index}
-      src={images[index]}
-      className="w-full h-full object-cover absolute inset-0"
-      initial={{ opacity: 0, scale: 1.08 }}
-      animate={{ opacity: 0.45, scale: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 1 }}
-    />
+  key={index}
+  src={images[index]}
+  className="w-full h-full object-cover absolute inset-0 brightness-125 md:brightness-100"
+  initial={{ opacity: 0, scale: 1.08 }}
+  animate={{ opacity: 0.45, scale: 1 }}
+  exit={{ opacity: 0 }}
+  transition={{ duration: 1 }}
+/>
   </AnimatePresence>
 
-  <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/70" />
+  <div
+  className="
+    absolute inset-0
+    bg-gradient-to-r
+    from-black/40 via-black/20 to-black/40
+    md:from-black/70 md:via-black/40 md:to-black/70
+  "
+/>
 </div>
 
       {/* CONTENT */}
