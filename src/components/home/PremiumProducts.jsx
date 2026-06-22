@@ -521,7 +521,7 @@ const sortedProducts = uniqueCategoryProducts.sort((a, b) => {
 </motion.div>
 
         {/* GRID */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-8">
 
       {sortedProducts.slice(0, 8).map((product, index) => {
 
@@ -570,14 +570,14 @@ const sortedProducts = uniqueCategoryProducts.sort((a, b) => {
                   <img
                     src={variant?.image}
                     alt={product.name}
-                    className="h-[420px] w-full object-cover group-hover:scale-110 duration-700"
+                   className="h-40 md:h-[420px] w-full object-cover group-hover:scale-110 duration-700"
                   />
 
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
 
-                 <div className="absolute top-4 left-4">
-  <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#111111]/80 backdrop-blur-xl border border-[#D4AF37]/20">
-    <Crown size={14} className="text-[#D4AF37]" />
+             <div className="absolute top-2 left-2 md:top-4 md:left-4">
+  <div className="flex items-center gap-1 px-2 py-1 md:px-4 md:py-2 rounded-full bg-[#111111]/80 backdrop-blur-xl border border-[#D4AF37]/20">
+    <Crown size={10} className="text-[#D4AF37] md:w-[14px] md:h-[14px]" />
     <span className="text-xs text-[#D4AF37]">
       Premium Collection
     </span>
@@ -585,7 +585,7 @@ const sortedProducts = uniqueCategoryProducts.sort((a, b) => {
 </div>
 
                   <Link to={`/products?category=${product.category}`}>
-                    <div className="absolute top-4 right-4 h-11 w-11 rounded-full bg-gradient-to-br from-[#F5E6B3] via-[#D4AF37] to-[#B8860B] text-black flex items-center justify-center opacity-0 group-hover:opacity-100 duration-300">
+                    <div className="absolute top-4 right-4 h-7 w-7 md:h-11 md:w-11 rounded-full bg-gradient-to-br from-[#F5E6B3] via-[#D4AF37] to-[#B8860B] text-black flex items-center justify-center opacity-0 group-hover:opacity-100 duration-300">
                       <ArrowUpRight size={18} />
                     </div>
                   </Link>
@@ -593,13 +593,13 @@ const sortedProducts = uniqueCategoryProducts.sort((a, b) => {
                 </div>
 
                 {/* CONTENT */}
-                <div className="p-6">
+                <div className="p-3 md:p-6">
 
-                  <p className="text-xs uppercase tracking-[3px] text-[#D4AF37]">
+                  <p className="text-[9px] md:text-xs uppercase tracking-[1px] md:tracking-[3px] text-[#D4AF37]">
   {product.category}
 </p>
 
-                 <h3 className="text-2xl font-bold mt-3 group-hover:text-[#D4AF37] duration-300">
+                 <h3 className="text-sm md:text-2xl font-bold mt-3 group-hover:text-[#D4AF37] duration-300">
                     {product.name}
                   </h3>
 
@@ -608,16 +608,16 @@ const sortedProducts = uniqueCategoryProducts.sort((a, b) => {
   {[1, 2, 3, 4, 5].map((star) => (
     <Star
       key={star}
-      size={16}
+      size={12}
       className={
         star <= Math.round(product.rating || 0)
-          ? "fill-[#D4AF37] text-[#D4AF37]"
-          : "text-zinc-600"
+          ? "fill-[#D4AF37] text-[#D4AF37] md:w-4 md:h-4"
+          : "text-zinc-600 md:w-4 md:h-4"
       }
     />
   ))}
 
-  <span className="text-zinc-400 text-sm ml-2">
+  <span className="text-zinc-400 text-[10px] md:text-sm ml-2">
     ({product.rating ?? "N/A"})
   </span>
 </div>
@@ -625,15 +625,14 @@ const sortedProducts = uniqueCategoryProducts.sort((a, b) => {
                   {/* PRICE */}
                   <div className="flex items-center justify-between mt-6">
 
-               <p className="text-3xl font-black text-[#D4AF37]">
+               <p className="text-lg md:text-3xl font-black text-[#D4AF37]">
                       ₹{variant?.price}
                     </p>
 
                     <Link to={`/products?category=${product.category}`}>
                    <button
   className="
-  px-5
-  py-2
+  px-2 py-1 md:px-5 md:py-2 text-xs md:text-base
   rounded-xl
   bg-gradient-to-r
   from-[#F5E6B3]
