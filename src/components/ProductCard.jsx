@@ -565,14 +565,13 @@ export default function ProductCard({ item, setSelectedProduct }) {
             No Image Available
           </span>
         </div>
+<div className="p-2 md:p-5 flex flex-col flex-1">
 
-        <div className="p-5 flex flex-col flex-1">
+         <p className="text-[#D4AF37] text-[9px] md:text-xs uppercase mb-1 truncate">
+  {item.category}
+</p>
 
-          <p className="text-[#D4AF37] text-xs tracking-[2px] uppercase mb-2">
-            {item.category}
-          </p>
-
-          <h2 className="text-xl font-bold text-white mb-2 line-clamp-1">
+          <h2 className="text-sm md:text-xl font-bold text-white mb-1 line-clamp-1">
             {item.name}
           </h2>
 
@@ -630,48 +629,48 @@ export default function ProductCard({ item, setSelectedProduct }) {
   }
   alt={item?.name || "Product"}
   className="
-  w-full
-  h-64 sm:h-72 md:h-80
-    object-cover
-    group-hover:scale-110
-    duration-700
-  "
+w-full
+h-40 md:h-64
+object-cover
+group-hover:scale-110
+duration-700
+"
 />
 
         {/* DARK OVERLAY */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
         {/* BADGE */}
-        <div className="
-          absolute top-4 left-4
-          px-3 py-1
-          rounded-full
-          text-xs
-          bg-[#111111]/70
-          border border-[#D4AF37]/20
-          text-[#D4AF37]
-          backdrop-blur-xl
-        ">
-          NEW
-        </div>
+     <div className="
+  hidden md:block
+  absolute top-4 left-4
+  px-3 py-1
+  rounded-full
+  text-xs
+  bg-[#111111]/70
+  border border-[#D4AF37]/20
+  text-[#D4AF37]
+">
+  NEW
+</div>
 
         {/* ARTICLE */}
         <div className="
-          absolute bottom-4 left-4
-          px-3 py-1
-          rounded-full
-          text-xs
-          bg-[#111111]/70
-          border border-white/10
-          text-zinc-300
-        ">
-          Article: {selectedVariant?.articleNo || "N/A"}
-        </div>
+  absolute bottom-2 left-2 md:bottom-4 md:left-4
+  px-1.5 py-[1px] md:px-3 md:py-1
+  rounded-full
+  text-[8px] md:text-xs
+  bg-[#111111]/70
+  border border-white/10
+  text-zinc-300
+">
+  #{selectedVariant?.articleNo || "N/A"}
+</div>
 
       </div>
 
       {/* CONTENT */}
-      <div className="p-5 flex flex-col flex-1">
+<div className="p-3 md:p-5 flex flex-col flex-1">
 
         {/* CATEGORY */}
         <p className="text-[#D4AF37] text-xs tracking-[3px] uppercase mb-2">
@@ -679,7 +678,7 @@ export default function ProductCard({ item, setSelectedProduct }) {
         </p>
 
         {/* NAME */}
-        <h2 className="text-xl md:text-2xl font-bold text-white mb-3 line-clamp-1 group-hover:text-[#D4AF37] duration-300">
+       <h2 className="text-sm md:text-2xl font-bold text-white mb-2 line-clamp-1 group-hover:text-[#D4AF37] duration-300">
           {item.name}
         </h2>
 
@@ -687,7 +686,7 @@ export default function ProductCard({ item, setSelectedProduct }) {
         <div className="flex items-center justify-between mb-5">
 
           <div>
-            <p className="text-[#D4AF37] text-2xl font-black">
+           <p className="text-[#D4AF37] text-lg md:text-2xl font-black">
               ₹{selectedVariant?.price || 0}
             </p>
             <p className="text-zinc-400 text-sm mt-1">
@@ -738,7 +737,7 @@ absolute left-0 top-1/2 top-1/2 -translate-y-1/2 z-10
                 key={index}
                 onClick={() => setSelectedVariant(variant)}
                 className={`
-                  flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden cursor-pointer
+                  flex-shrink-0 w-10 h-10 md:w-16 md:h-16 rounded-xl overflow-hidden cursor-pointer
                   border transition-all duration-300
                   ${
                     selectedVariant?.articleNo === variant.articleNo
@@ -793,7 +792,7 @@ absolute right-0 top-1/2 top-1/2 -translate-y-1/2 z-10
             })
           }
           className="
-            mt-auto w-full py-3 rounded-2xl
+            mt-auto w-full py-2 md:py-3 text-sm md:text-base rounded-2xl
             font-bold
             bg-gradient-to-r
             from-[#F5E6B3]

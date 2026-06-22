@@ -288,7 +288,7 @@ overflow-hidden
             </motion.div>
 
             {/* PRODUCTS */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
          {groupedProducts[cat].map((item, index) => (
   <motion.div
     key={item.id}
