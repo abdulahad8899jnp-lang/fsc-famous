@@ -94,8 +94,25 @@ const filteredProducts = useMemo(() => {
     return matchesSearch && matchesCategory;
   });
 }, [products, search, category]);
- 
 
+ 
+const variantProducts = useMemo(() => {
+  return filteredProducts.flatMap((product) =>
+    product.variants.map((variant, index) => ({
+      ...product,
+
+      currentVariant: variant,
+
+      otherVariants: product.variants.filter(
+        (_, i) => i !== index
+      ),
+
+      variantIndex: index,
+
+      uniqueId: `${product.id}-${index}`,
+    }))
+  );
+}, [filteredProducts]);
  
  
 if (loading) {
@@ -230,15 +247,15 @@ overflow-hidden
   <p className="text-center text-zinc-400 mb-12">
   Showing{" "}
   <span className="text-[#D4AF37] font-bold">
-    {filteredProducts.length}
+{variantProducts.length}
   </span>{" "}
   Products
   </p>
    
    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-  {filteredProducts.map((item) => (
+  {variantProducts.map((item) => (
     <ProductCard
-      key={item.id}
+      key={item.uniqueId}
       item={item}
       setSelectedProduct={setSelectedProduct}
     />

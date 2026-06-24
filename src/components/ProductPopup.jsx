@@ -13,15 +13,23 @@ export default function ProductPopup({
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
 
-  useEffect(() => {
-    if (selectedProduct?.variants?.length) {
-      setSelectedVariant(selectedProduct.variants[0]);
-    } else {
-      setSelectedVariant(null);
-    }
+useEffect(() => {
+  if (selectedProduct?.initialVariant) {
+    setSelectedVariant(
+      selectedProduct.initialVariant
+    );
+  } else if (
+    selectedProduct?.variants?.length
+  ) {
+    setSelectedVariant(
+      selectedProduct.variants[0]
+    );
+  } else {
+    setSelectedVariant(null);
+  }
 
-    setSelectedSize("");
-  }, [selectedProduct]);
+  setSelectedSize("");
+}, [selectedProduct]);
 
   if (!selectedProduct) return null;
 
@@ -282,7 +290,11 @@ Customer wants to order this product.`;
           </h3>
 
           <div className="flex flex-wrap gap-4 mb-10">
-            {selectedProduct.sizes?.map((size) => (
+            {(
+    selectedVariant?.sizes?.length
+      ? selectedVariant.sizes
+      : selectedProduct.sizes || []
+  ).map((size) => (
               <button
                 key={size}
                 onClick={() => setSelectedSize(size)}
@@ -387,166 +399,4 @@ Customer wants to order this product.`;
   </motion.div>
 </AnimatePresence>
   );
-}   // <AnimatePresence>
-    //   <motion.div
-    //     initial={{ opacity: 0 }}
-    //     animate={{ opacity: 1 }}
-    //     exit={{ opacity: 0 }}
-    //     className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-50 p-3 md:p-6"
-    //   >
-    //     <motion.div
-    //       initial={{ scale: 0.9, opacity: 0 }}
-    //       animate={{ scale: 1, opacity: 1 }}
-    //       exit={{ scale: 0.9, opacity: 0 }}
-    //       transition={{ duration: 0.25 }}
-    //       className="bg-zinc-950 border border-zinc-800 rounded-[35px] overflow-hidden max-w-7xl w-full h-[95vh] flex flex-col lg:grid lg:grid-cols-[1.1fr_0.9fr]"
-    //     >
-    //       {/* LEFT */}
-    //       <div className="p-4 md:p-5 flex flex-col bg-black/20">
-    //         <div className="relative overflow-hidden rounded-[28px] border border-zinc-800 h-[45vh] lg:h-[85vh]">
-    //           <img
-    //             src={selectedVariant?.image || "/placeholder.png"}
-    //             alt={selectedProduct.name || "Product"}
-    //             className="w-full h-full object-cover hover:scale-105 duration-500"
-    //           />
-    //         </div>
-    //       </div>
-
-    //       {/* RIGHT */}
-    //       <div className="relative h-[95vh] overflow-y-auto scrollbar-hide">
-    //         <div className="p-6 md:p-10">
-
-    //           {/* CLOSE */}
-    //           <button
-    //             onClick={() => setSelectedProduct(null)}
-    //             className="absolute top-3 right-3 bg-zinc-800 hover:bg-red-500 w-10 h-10 rounded-full flex items-center justify-center"
-    //           >
-    //             <X size={18} />
-    //           </button>
-
-    //           {/* CATEGORY */}
-    //           <p className="text-yellow-400 uppercase text-sm mb-3">
-    //             {selectedProduct.category}
-    //           </p>
-
-    //           {/* TITLE */}
-    //           <h2 className="text-4xl font-extrabold mb-5">
-    //             {selectedProduct.name}
-    //           </h2>
-
-    //           {/* PRICE */}
-    //           <div className="flex items-center gap-5 mb-6 flex-wrap">
-    //             <p className="text-4xl text-green-400 font-bold">
-    //               ₹{selectedVariant?.price || 0}
-    //             </p>
-
-    //             <div className="flex items-center gap-1 text-yellow-400">
-    //               <Star size={20} fill="currentColor" />
-    //               <span className="text-lg">
-    //                 {selectedProduct.rating || "4.8"}
-    //               </span>
-    //             </div>
-    //           </div>
-
-    //           {/* ARTICLE + COLOR */}
-    //           <div className="flex flex-wrap gap-3 mb-6">
-    //             <div className="bg-zinc-800 px-4 py-3 rounded-2xl text-sm">
-    //               Article:{" "}
-    //               <span className="text-yellow-400">
-    //                 {selectedVariant?.articleNo || "N/A"}
-    //               </span>
-    //             </div>
-
-    //             <div className="bg-zinc-800 px-4 py-3 rounded-2xl text-sm">
-    //               Color:{" "}
-    //               <span className="text-yellow-400">
-    //                 {selectedVariant?.color || "N/A"}
-    //               </span>
-    //             </div>
-    //           </div>
-
-    //           {/* FABRIC + STOCK */}
-    //           <div className="space-y-3 mb-6">
-    //             <p className="text-gray-300">
-    //               <span className="text-white font-semibold">
-    //                 Fabric:
-    //               </span>{" "}
-    //               {selectedProduct.fabric || "N/A"}
-    //             </p>
-
-    //             <p className="text-yellow-300 font-medium">
-    //               {selectedProduct.stock || ""}
-    //             </p>
-    //           </div>
-
-    //           {/* DESCRIPTION */}
-    //           <p className="text-zinc-400 mb-8">
-    //             {selectedProduct.description || ""}
-    //           </p>
-
-    //           {/* SIZE */}
-    //           <h3 className="text-2xl font-bold mb-5">
-    //             Select Size
-    //           </h3>
-
-    //           <div className="flex flex-wrap gap-4 mb-10">
-    //             {selectedProduct.sizes?.map((size) => (
-    //               <button
-    //                 key={size}
-    //                 onClick={() => setSelectedSize(size)}
-    //                 className={`w-20 h-16 rounded-2xl border font-bold ${
-    //                   selectedSize === size
-    //                     ? "bg-yellow-500 text-black"
-    //                     : "border-zinc-700"
-    //                 }`}
-    //               >
-    //                 {size}
-    //               </button>
-    //             ))}
-    //           </div>
-
-    //           {/* THUMBNAILS */}
-    //           <div className="mb-8">
-    //             <h3 className="text-lg mb-3">More Images</h3>
-
-    //             <div className="flex gap-3 overflow-x-auto scrollbar-hide">
-    //               {selectedProduct.variants?.map((v, i) => (
-    //                 <button
-    //                   key={i}
-    //                   onClick={() => setSelectedVariant(v)}
-    //                   className={`w-20 h-24 border-2 rounded-2xl overflow-hidden ${
-    //                     selectedVariant?.articleNo === v.articleNo
-    //                       ? "border-yellow-400"
-    //                       : "border-zinc-700"
-    //                   }`}
-    //                 >
-    //                   <img
-    //                     src={v.image}
-    //                     className="w-full h-full object-cover"
-    //                   />
-    //                 </button>
-    //               ))}
-    //             </div>
-    //           </div>
-
-    //           {/* ORDER BUTTON */}
-    //           <button
-    //             onClick={handleOrder}
-    //             className="bg-green-500 hover:bg-green-400 text-black w-full py-5 rounded-2xl font-bold mb-4"
-    //           >
-    //             Order on WhatsApp
-    //           </button>
-
-    //           {/* 🆕 BUY NOW BUTTON (ADDED ONLY) */}
-    //           <button
-    //             onClick={handleBuyNow}
-    //             className="bg-blue-500 hover:bg-blue-400 text-black w-full py-5 rounded-2xl font-bold"
-    //           >
-    //             Buy Now
-    //           </button>
-
-    //         </div>
-    //       </div>
-    //     </motion.div>
-    //   </motion.div>
-    // </AnimatePresence>
+}  
