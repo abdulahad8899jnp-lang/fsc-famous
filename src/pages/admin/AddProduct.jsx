@@ -5,9 +5,9 @@ import {
 } from "firebase/auth";
 import { Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { auth,db, storage  } from "../firebase/firebase";
+import { auth,db, storage  } from "../../firebase/firebase";
 import { query, where } from "firebase/firestore";
 
 import {
@@ -41,6 +41,10 @@ export default function Admin() {
   const [customSizes, setCustomSizes] = useState([""]);
 const [searchTerm, setSearchTerm] = useState("");
 const [userCount, setUserCount] = useState(0);
+
+const location = useLocation();
+
+const [showPreview, setShowPreview] = useState(false);
   const [variants, setVariants] = useState([
     {
       image: "",
@@ -51,6 +55,22 @@ const [userCount, setUserCount] = useState(0);
        customSizes: [],
     },
   ]);
+
+useEffect(() => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}, []);
+
+useEffect(() => {
+  if (location.state?.showPreview) {
+    setShowPreview(true);
+
+    setTimeout(() => {
+      document
+        .getElementById("productPreview")
+        ?.scrollIntoView({ behavior: "smooth" });
+    }, 200);
+  }
+}, [location.state]);
  
 
 
@@ -426,75 +446,36 @@ const handleLogout = async () => {
     
     <div className="min-h-screen bg-black text-white p-4 sm:p-6 md:p-10 overflow-x-hidden">
 
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 mt-10 md:mt-8">
+     <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 mt-10">
 
-  <h1 className="text-3xl md:text-4xl font-bold text-yellow-400">
-    ADMIN PANEL
-  </h1>
 
-  <div className="flex gap-3 flex-wrap">
-      <button
-  onClick={() => navigate("/admin/users")}
-  className="relative bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl"
->
-  All Users
+  {/* Title */}
+  <div className="text-center">
+    <h1 className="text-3xl md:text-4xl font-bold text-yellow-400">
+      Product Management
+    </h1>
+
+    <p className="text-zinc-400 mt-2">
+      Add, Edit & Delete Products
+    </p>
+  </div>
 
   
-</button>
-<button
-  onClick={() => navigate("/admin/login")}
-  className="
-    fixed
-    top-5
-    left-5
-    z-50
-    px-4
-    py-2
-    rounded-xl
-    bg-zinc-900/80
-    border
-    border-zinc-700
-    text-white
-    hover:border-yellow-500
-    hover:text-yellow-400
-    transition-all
-  "
->
-  ← Back
-</button>
-    <button
-      onClick={() => navigate("/admin/orders")}
-      className="
-        bg-yellow-400
-        hover:bg-yellow-300
-        text-black
-        px-5
-        py-3
-        rounded-2xl
-        font-bold
-        transition
-      "
-    >
-      📦 Orders
-    </button>
-
-    <button
-      onClick={handleLogout}
-      className="
-        bg-red-500
-        hover:bg-red-600
-        text-white
-        px-5
-        py-3
-        rounded-2xl
-        font-bold
-        transition
-      "
-    >
-      Logout
-    </button>
-
-  </div>
+  {/* Back Button */}
+  <button
+    onClick={() => navigate("/admin")}
+    className="
+      w-full md:w-auto
+      px-5 py-3
+      rounded-2xl
+      bg-zinc-900
+      border border-zinc-800
+      hover:border-yellow-500
+      transition-all
+    "
+  >
+    ← Back
+  </button>
 
 </div>
       
@@ -949,6 +930,14 @@ const handleLogout = async () => {
       >
         {editId ? "UPDATE PRODUCT" : "SAVE PRODUCT"}
       </button>
+
+
+
+
+<div id="productPreview">
+  {showPreview && (
+    <>
+
 <div className="mb-6">
   <input
     type="text"
@@ -1117,7 +1106,9 @@ const handleLogout = async () => {
     ))}
 
 </div>
-      
+    </>
+  )}
+</div>
     </div>
     
   );

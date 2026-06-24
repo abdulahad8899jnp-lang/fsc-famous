@@ -55,6 +55,7 @@
 
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -66,6 +67,7 @@ export default function Navbar() {
 const shouldHideNavbar =
   location.pathname.startsWith("/admin/users") ||
    location.pathname.startsWith("/admin/orders") ||
+      location.pathname.startsWith("/admin/products") ||
   location.pathname === "/account" ||
   location.pathname === "/admin" ||
   location.pathname === "/profile-setup" ||
@@ -254,55 +256,52 @@ if (shouldHideNavbar) {
           </motion.div>
         )}
       </AnimatePresence>
-      {showLogo && (
-  <div
-    className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-[9999] p-4"
-    onClick={() => setShowLogo(false)}
-  >
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8, y: 30 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
-      className="
-      relative
-      bg-[#111111]
-      border border-[#D4AF37]/30
-      rounded-[32px]
-      p-6
-      max-w-md w-full
-      shadow-[0_0_50px_rgba(212,175,55,0.2)]
-      "
-      onClick={(e) => e.stopPropagation()}
+      {showLogo &&
+  createPortal(
+    <div
+      className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-[99999] p-4"
+      onClick={() => setShowLogo(false)}
     >
-      <button
-        onClick={() => setShowLogo(false)}
-        className="absolute top-3 right-3 text-white text-xl"
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8, y: 30 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        className="
+        relative
+        bg-[#111111]
+        border border-[#D4AF37]/30
+        rounded-[32px]
+        p-6
+        max-w-md w-full
+        shadow-[0_0_50px_rgba(212,175,55,0.2)]
+        "
+        onClick={(e) => e.stopPropagation()}
       >
-        ✕
-      </button>
+        <button
+          onClick={() => setShowLogo(false)}
+          className="absolute top-3 right-3 text-white text-xl"
+        >
+          ✕
+        </button>
 
-      <div className="text-center">
-        <img
-          src="/logo.png"
-          alt="Logo"
-          className="w-40 h-40 mx-auto object-contain"
-        />
+        <div className="text-center">
+         <img
+  src="/logo.png"
+  className="w-40 max-h-40 mx-auto object-contain"
+/>
 
-       <h2
-  className="mt-4 text-2xl font-bold text-[#D4AF37] cursor-pointer"
-  onDoubleClick={() => window.location.href = "/admin/login"}
->
-  Famous Sherwani Collection
-</h2>
+          <h2 className="mt-4 text-2xl font-bold text-[#D4AF37] cursor-pointer" onDoubleClick={() => window.location.href = "/admin/login "} > Famous Sherwani Collection </h2>
 
-        <p className="mt-2 text-zinc-400 text-sm">
-          Premium Wedding & Royal Fashion Collection
-        </p>
-      </div>
-    </motion.div>
-  </div>
-)}
+          <p className="mt-2 text-zinc-400 text-sm">
+            Premium Wedding & Royal Fashion Collection
+          </p>
+        </div>
+      </motion.div>
+    </div>,
+    document.body
+  )
+}
     </header>
   );
 }

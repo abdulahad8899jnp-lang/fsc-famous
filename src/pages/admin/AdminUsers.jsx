@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "../../firebase/firebase";
 import { useEffect, useState } from "react";
 import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { db } from "../firebase/firebase";
+import { db } from "../../firebase/firebase";
 
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);
@@ -11,25 +13,50 @@ const [selectedUser, setSelectedUser] = useState(null);
 
 const navigate = useNavigate();
   useEffect(() => {
-  const fetchUsers = async () => {
-  try {
-    const snap = await getDocs(collection(db, "users"));
+  const unsub = onAuthStateChanged(
+    auth,
+    async (user) => {
+      if (!user) {
+        navigate("/admin/login");
+        return;
+      }
 
-    const data = snap.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+      const email = user.email
+        ?.trim()
+        .toLowerCase();
 
-    setUsers(data);
-  } catch (err) {
-    console.log(err);
-  } finally {
-    setLoading(false);
-  }
-};
+      if (
+        email !==
+        "1983mahboob@gmail.com"
+      ) {
+        signOut(auth);
+        navigate("/admin/login");
+        return;
+      }
 
-    fetchUsers();
-  }, []);
+      try {
+        const snap = await getDocs(
+          collection(db, "users")
+        );
+
+        const data = snap.docs.map(
+          (doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          })
+        );
+
+        setUsers(data);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+  );
+
+  return () => unsub();
+}, []);
 
   const filteredUsers = users.filter(
   (u) =>

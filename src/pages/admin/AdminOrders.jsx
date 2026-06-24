@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import {
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
+
+import { auth } from "../../firebase/firebase";
+// ✅ New
+import {
   getAllOrders,
   updateOrderStatus,
-  deleteOrder,
-} from "../firebase/ordersService";
+  deleteOrder
+} from "../../firebase/ordersService";
 import { useNavigate } from "react-router-dom";
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
@@ -13,6 +20,28 @@ export default function AdminOrders() {
     fetchOrders();
   }, []);
 const navigate = useNavigate();
+useEffect(() => {
+  const unsub = onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      navigate("/admin/login");
+      return;
+    }
+
+    const email = user.email
+      ?.trim()
+      .toLowerCase();
+
+    if (
+      email !==
+      "1983mahboob@gmail.com"
+    ) {
+      signOut(auth);
+      navigate("/admin/login");
+    }
+  });
+
+  return () => unsub();
+}, []);
   const fetchOrders = async () => {
     const data = await getAllOrders();
     setOrders(data);

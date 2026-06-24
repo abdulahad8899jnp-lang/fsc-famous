@@ -46,13 +46,14 @@ import Home from "./pages/Home";
 import ProductsPage from "./pages/ProductsPage";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Admin from "./pages/Admin";
+import Admin from "./pages/admin/AddProduct";
 import Login from "./pages/Login";
-
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AddProduct from "./pages/admin/AddProduct";
 // 🛒 ORDER SYSTEM PAGES
 import Checkout from "./pages/Checkout";
-import AdminUsers from "./pages/AdminUsers";
-import AdminOrders from "./pages/AdminOrders";
+import AdminUsers from "./pages/admin/AdminUsers";
+import AdminOrders from "./pages/admin/AdminOrders";
 import OrderSuccess from "./pages/OrderSuccess";
 import UserOrders from "./pages/UserOrders";
 import UserLogin from "./pages/UserLogin";
@@ -104,7 +105,12 @@ useEffect(() => {
           {/* ADMIN */}
           <Route path="/profile-setup" element={<ProfileSetup />}/>
           <Route path="/admin/login" element={<Login />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+
+<Route
+  path="/admin/products"
+  element={<AddProduct />}
+/>
           <Route path="/admin/orders" element={<AdminOrders />} />
           <Route path="/user-login" element={<UserLogin />} />
 <Route
