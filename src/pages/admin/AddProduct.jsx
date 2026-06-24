@@ -1007,99 +1007,83 @@ const handleLogout = async () => {
 
         {openCategory === cat && (
 
-          <div className="p-4 border-t border-zinc-800 space-y-3">
+  <div className="p-4 border-t border-zinc-800">
 
-           {filteredProducts
-  .filter(
-    (item) =>
-      item.category === cat
-  )
-              .map((item) => (
+   <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
 
-                <div
-                  key={item.id}
-                  className="
-                    bg-zinc-800
-                    p-4
-                    rounded-2xl
-                    flex
-                    flex-col
-                    sm:flex-row
-                    justify-between
-                    gap-4
-                  "
-                >
+      {filteredProducts
+        .filter((item) => item.category === cat)
+        .map((item) => (
 
-                  <div className="flex gap-4">
+          <div
+            key={item.id}
+            className="
+              bg-zinc-800
+              rounded-2xl
+              overflow-hidden
+              border border-zinc-700
+              hover:border-yellow-400
+              transition-all
+            "
+          >
 
-                    <img
-                      src={
-                        item?.variants?.[0]
-                          ?.image
-                      }
-                      className="
-                        w-16
-                        h-16
-                        rounded-xl
-                        object-cover
-                      "
-                    />
-
-                    <div>
-                      <h3 className="font-bold">
-                        {item.name}
-                      </h3>
-
-                      <p className="text-green-400">
-                        ₹
-                        {
-                          item?.variants?.[0]
-                            ?.price
-                        }
-                      </p>
-                    </div>
-
-                  </div>
-
-                  <div className="flex gap-2">
-
-                    <button
-                      onClick={() =>
-                        editProduct(item)
-                      }
-                      className="
-                        bg-blue-500
-                        px-4
-                        py-2
-                        rounded-xl
-                      "
-                    >
-                      Edit
-                    </button>
-
-                    <button
-  onClick={() =>
-    deleteProduct(item.id, item.name)
-  }
+           <img
+  src={item?.variants?.[0]?.image || "/placeholder.png"}
+  alt={item.name}
   className="
-    bg-red-500
-    px-4
-    py-2
-    rounded-xl
+    w-full
+    h-36 md:h-40
+    object-cover
   "
->
-  Delete
-</button>
+/>
 
-                  </div>
+         <div className="p-2">
 
-                </div>
+              <h3 className="font-bold text-sm line-clamp-1">
+  {item.name}
+</h3>
 
-              ))}
+              <p className="text-yellow-400 text-sm">
+                {item.category}
+              </p>
+
+              <p className="text-green-400 font-bold text-sm mt-1">
+  ₹{item?.variants?.[0]?.price || 0}
+</p>
+
+              <p className="text-zinc-400 text-xs mt-1">
+                {item?.variants?.length || 0} Variants
+              </p>
+
+             <div className="flex gap-2 mt-3">
+
+  <button
+    onClick={() => editProduct(item)}
+    className="flex-1 bg-blue-500 py-1.5 text-sm rounded-xl"
+  >
+    Edit
+  </button>
+
+  <button
+    onClick={() => deleteProduct(item.id, item.name)}
+    className="flex-1 bg-red-500 py-1.5 text-sm rounded-xl"
+  >
+    Delete
+  </button>
+
+</div>
+
+            </div>
 
           </div>
 
-        )}
+        ))}
+
+    </div>
+
+  </div>
+
+)}
 
       </div>
 
