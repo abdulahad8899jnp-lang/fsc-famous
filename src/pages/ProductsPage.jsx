@@ -79,52 +79,24 @@ useEffect(() => {
   }),
 ];
 
-  // =========================
-  // GROUP PRODUCTS BY CATEGORY (IMPORTANT FIX)
-  // =========================
-  const groupedProducts = useMemo(() => {
-    const groups = {};
+const filteredProducts = useMemo(() => {
+  return products.filter((item) => {
+    const matchesSearch =
+      item.name?.toLowerCase().includes(search.toLowerCase()) ||
+      item.variants?.some((v) =>
+        v.articleNo?.toLowerCase().includes(search.toLowerCase())
+      );
 
-    products.forEach((item) => {
+    const matchesCategory =
+      category === "All" ||
+      item.category?.toLowerCase() === category.toLowerCase();
 
-      const cat = item.category || "Uncategorized";
+    return matchesSearch && matchesCategory;
+  });
+}, [products, search, category]);
+ 
 
-      if (!groups[cat]) {
-        groups[cat] = [];
-      }
-
-      // search filter
-      const matchesSearch =
-        item.name?.toLowerCase().includes(search.toLowerCase()) ||
-        item.variants?.some((v) =>
-          v.articleNo?.toLowerCase().includes(search.toLowerCase())
-        );
-
-      // category filter
-      const matchesCategory =
-        category === "All" ||
-        cat.toLowerCase() === category.toLowerCase();
-
-      if (matchesSearch && matchesCategory) {
-        groups[cat].push(item);
-      }
-    });
-
-    return groups;
-  }, [products, search, category]);
-  
-  
-
-
-  const sortedGroupKeys = Object.keys(groupedProducts).sort((a, b) => {
-  const aSherwani = a.toLowerCase().includes("sherwani");
-  const bSherwani = b.toLowerCase().includes("sherwani");
-
-  if (aSherwani && !bSherwani) return -1;
-  if (!aSherwani && bSherwani) return 1;
-
-  return a.localeCompare(b);
-});
+ 
  
 if (loading) {
   return (
@@ -258,64 +230,23 @@ overflow-hidden
   <p className="text-center text-zinc-400 mb-12">
   Showing{" "}
   <span className="text-[#D4AF37] font-bold">
-    {Object.values(groupedProducts)
-      .flat()
-      .length}
+    {filteredProducts.length}
   </span>{" "}
   Products
   </p>
-    {/* PRODUCT GROUPS */}
-   {sortedGroupKeys.map(
-      (cat) =>
-        groupedProducts[cat].length > 0 && (
-          <div key={cat} className="mb-24">
-
-            {/* CATEGORY HEADING */}
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="flex items-center gap-4 mb-12"
-            >
-              <div className="w-16 h-[3px] bg-[#D4AF37]" />
-
-              <h2 className="text-2xl sm:text-3xl md:text-5xl font-black text-[#D4AF37]">
-                {cat}
-              </h2>
-              <p className="text-zinc-400 text-sm mt-2">
-  {groupedProducts[cat].length} Products
-  </p>
-            </motion.div>
-
-            {/* PRODUCTS */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-         {groupedProducts[cat].map((item, index) => (
-  <motion.div
-    key={item.id}
-    initial={{ opacity: 0, y: 40 }}
-whileInView={{ opacity: 1, y: 0 }}
-viewport={{ once: true }}
-transition={{
-  duration: 0.5,
-  ease: "easeOut",
-}}
-  >
+   
+   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+  {filteredProducts.map((item) => (
     <ProductCard
+      key={item.id}
       item={item}
       setSelectedProduct={setSelectedProduct}
     />
-  </motion.div>
   ))}
-            </div>
-
-          </div>
-        )
-    )}
+</div>
 
     {/* EMPTY */}
-    {Object.values(groupedProducts).every(
-      (arr) => arr.length === 0
-    ) && (
+    {filteredProducts.length === 0 && (
       <div className="text-center py-32">
   <div className="text-7xl mb-5">
   🔍
@@ -330,6 +261,8 @@ transition={{
 
       </div>
     )}
+
+
 
   <motion.div
   initial={{ opacity: 0, y: 100 }}
@@ -387,124 +320,5 @@ transition={{
   );
 }
 
-// <section className="bg-gradient-to-b from-black via-zinc-950 to-black text-white py-16 px-4 min-h-screen overflow-hidden">
-
-    //   <div className="max-w-7xl mx-auto">
-
-    //     {/* HERO */}
-    //     <motion.div
-    //       initial={{ opacity: 0, y: 40 }}
-    //       animate={{ opacity: 1, y: 0 }}
-    //       className="text-center mb-16"
-    //     >
-    //       <p className="text-yellow-400 tracking-[6px] uppercase text-sm mb-4 mt-4">
-    //         Famous Sherwani Collection
-    //       </p>
-
-    //       <h1 className="text-5xl md:text-7xl font-extrabold leading-tight">
-    //         Premium Fashion <br />
-    //         <span className="text-yellow-400">
-    //           For Every Occasion
-    //         </span>
-    //       </h1>
-
-    //       <p className="text-gray-400 mt-6 text-lg max-w-2xl mx-auto">
-    //         Explore luxurious Sherwani, Blazer, Indo-Western & Coat Pant collection.
-    //       </p>
-    //     </motion.div>
-
-    //     {/* FILTER */}
-    //     <div className="flex flex-wrap gap-3 justify-center mb-6">
-
-    //       {categories.map((item) => (
-    //         <button
-    //           key={item}
-    //           onClick={() => setCategory(item)}
-    //           className={`px-5 py-2 rounded-full border transition duration-300
-    //           ${
-    //             category === item
-    //               ? "bg-yellow-400 text-black border-yellow-400"
-    //               : "border-zinc-700 hover:border-yellow-400 bg-zinc-900/60"
-    //           }`}
-    //         >
-    //           {item}
-    //         </button>
-    //       ))}
-
-    //     </div>
-
-    //     {/* SEARCH */}
-    //     <div className="flex justify-center mb-12">
-
-    //       <input
-    //         type="text"
-    //         placeholder="Search Product or Article No..."
-    //         value={search}
-    //         onChange={(e) => setSearch(e.target.value)}
-    //         className="w-full md:w-[420px] bg-zinc-900 border border-zinc-700 px-5 py-3 rounded-2xl outline-none focus:border-yellow-400"
-    //       />
-
-    //     </div>
-
-    //     {/* PRODUCT GROUPS (HEADINGS BACK 🔥) */}
-    //     {Object.keys(groupedProducts).map((cat) => (
-
-    //       groupedProducts[cat].length > 0 && (
-
-    //         <div key={cat} className="mb-24">
-
-    //           {/* CATEGORY HEADING */}
-    //           <motion.div
-    //             initial={{ opacity: 0, x: -50 }}
-    //             whileInView={{ opacity: 1, x: 0 }}
-    //             viewport={{ once: true }}
-    //             className="flex items-center gap-4 mb-10"
-    //           >
-    //             <div className="w-14 h-[3px] bg-yellow-400"></div>
-
-    //             <h2 className="text-4xl font-bold text-yellow-400">
-    //               {cat}
-    //             </h2>
-    //           </motion.div>
-
-    //           {/* PRODUCTS */}
-    //           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-
-    //             {groupedProducts[cat].map((item) => (
-    //               <ProductCard
-    //                 key={item.id}
-    //                 item={item}
-    //                 setSelectedProduct={setSelectedProduct}
-    //               />
-    //             ))}
-
-    //           </div>
-
-    //         </div>
-
-    //       )
-
-    //     ))}
-
-    //     {/* EMPTY STATE */}
-    //     {Object.values(groupedProducts).every(arr => arr.length === 0) && (
-    //       <div className="text-center py-32">
-    //         <h2 className="text-4xl font-bold text-yellow-400 mb-4">
-    //           No Product Found
-    //         </h2>
-    //         <p className="text-zinc-400">
-    //           Try another search or category.
-    //         </p>
-    //       </div>
-    //     )}
-
-    //     {/* POPUP */}
-    //     <ProductPopup
-    //       selectedProduct={selectedProduct}
-    //       setSelectedProduct={setSelectedProduct}
-    //     />
-
-    //   </div>
-    // </section>
 
 
